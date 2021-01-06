@@ -4,23 +4,24 @@
 	templated.co @templatedco
 	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
 -->
+{% load static %}
 <html>
 	<head>
 		<title>체 단 실</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" href="assets/css/main.css" />
+            <link rel="stylesheet" href="{% static 'main/css/main.css' %}" />
 	</head>
 	<body class="landing">
 
 		<!-- Header -->
 			<header id="header" class="alt">
-				<h1><strong><a href="index.html">체단실</a></strong> &nbsp;&nbsp;상병 이제일</h1>
+				<h1><strong><a href="{% url 'index' %}">체단실</a></strong> &nbsp;&nbsp;상병 이제일</h1>
 				<nav id="nav">
 					<ul>
-						<li><a href="index.html">Home</a></li>
-						<li><a href="generic.html">Generic</a></li>
-						<li><a href="elements.html">Elements</a></li>
+						<li><a href="{% url 'index' %}">Home</a></li>
+						<li><a href="{% url 'generic' %}">Generic</a></li>
+						<li><a href="{% url 'elements' %}">Elements</a></li>
 					</ul>
 				</nav>
 			</header>
