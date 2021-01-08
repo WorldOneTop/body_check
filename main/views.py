@@ -13,3 +13,7 @@ def elements(request):
     return render(request, 'main/elements.html')
 
 
+def login(request):
+    return render(request, 'main/dialog.html')
+
+
