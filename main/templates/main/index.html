@@ -11,37 +11,61 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
             <link rel="stylesheet" href="{% static 'main/css/main.css' %}" />
+        <!-- dialog -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<link rel="stylesheet" href="{% static 'main/css/dialog.css' %}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+        
+        
 	</head>
-	<body class="landing">
+	<body>
 
 		<!-- Header -->
 			<header id="header" class="alt">
-				<h1><strong><a href="{% url 'index' %}">체단실</a></strong> &nbsp;&nbsp;상병 이제일</h1>
+				<h1><strong><a href="{% url 'index' %}">체단실</a></strong> &nbsp;&nbsp;by &nbsp;△ 이제일</h1>
 				<nav id="nav">
 					<ul>
 						<li><a href="{% url 'index' %}">Home</a></li>
 						<li><a href="{% url 'generic' %}">Generic</a></li>
 						<li><a href="{% url 'elements' %}">Elements</a></li>
-						<li><a href="{% url 'login' %}">Login</a></li>
+						<li><a href=# id="six" onclick="dialog_click(this.id)"> Login</a></li>   
+						<li><a href="{% url 'dialog' %}">dialog</a></li>
 					</ul>
 				</nav>
 			</header>
         
 			<a href="#menu" class="navPanelToggle"><span class="fa fa-bars"> </span></a>
 
+    
+<!-- dialog 창 view 설정 -->
+<div id="modal-container">
+  <div class="modal-background">
+    <div class="modal">
+        <h2>I'm a Modal</h2>
+        <p>Hear me roar.</p>
+        <!-- 외곽선 그려주는 건가봄 -->
+        <svg class="modal-svg" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="none">
+			<rect x="0" y="0" fill="none" width="226" height="162" rx="3" ry="3"></rect>
+			</svg>
+    </div>
+  </div>
+</div>
+    
+        
+        
 		<!-- Banner -->
         <div>
             
 			<section id="banner">
 				<h2>체단실</h2>
-				<b style="line-height:130%;"><p>Your personal body data  <br/> in this one Application.</p></b>
+				<b style="line-height:130%;"><p>Your personal body data in  <br/> this one Application.</p></b>
 				<ul class="actions">
 					<li><a href="#" class="button special">start</a></li>
 				</ul>
 			</section>
         </div>
 
-			<!-- One -->
+        <!-- One -->
 				<section id="one" class="wrapper style1">
 					<div class="container 75%">
 						<div class="row 200%">
@@ -173,6 +197,10 @@
 			<script src="{% static 'main/js/skel.min.js' %}"></script>
 			<script src="{% static 'main/js/util.js' %}"></script>
 			<script src="{% static 'main/js/main.js' %}"></script>
+            <script  src="{% static 'main/js/dialog.js' %}"></script>
+<!-- dialog -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script src="{% static 'main/js/dialog.js' %}"></script>
 
 	</body>
 </html>
