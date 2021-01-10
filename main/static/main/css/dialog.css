@@ -1,8 +1,3 @@
-* {
-  box-sizing: border-box;
-}
-
-
 
 /* Uncovering, Blow Up 효과에만 필요 */
 /* html.modal-active, body.modal-active {
@@ -131,7 +126,7 @@
   background-color: transparent;
   animation: modalFadeIn 0.5s 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
-#modal-container.six .modal-background .modal h2, #modal-container.six .modal-background .modal p {
+#modal-container.six .modal-background .modal h2, #modal-container.six .modal-background .modal_div  {
   opacity: 0;
   position: relative;
   animation: modalContentFadeIn 0.5s 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
@@ -148,7 +143,7 @@
 #modal-container.six.out .modal-background .modal {
   animation: modalFadeOut 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
-#modal-container.six.out .modal-background .modal h2, #modal-container.six.out .modal-background .modal p {
+#modal-container.six.out .modal-background .modal h2, #modal-container.six.out .modal-background .modal_div  {
   animation: modalContentFadeOut 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
 #modal-container.six.out .modal-background .modal .modal-svg rect {
@@ -195,75 +190,37 @@
   text-align: center;
   vertical-align: middle;
 }
+/* modal의 배경 그림 지정;;; */
 #modal-container .modal-background .modal {
   background: white;
-  padding: 50px;
   display: inline-block;
-  border-radius: 3px;
+  border-radius: 0.4em;
   font-weight: 300;
   position: relative;
 }
-#modal-container .modal-background .modal h2 {
+#modal-container .modal-background {
   font-size: 25px;
   line-height: 25px;
   margin-bottom: 15px;
 }
-#modal-container .modal-background .modal p {
+#modal-container .modal-background {
   font-size: 18px;
   line-height: 22px;
 }
+/* modal 외곽선 그려주는거 */
 #modal-container .modal-background .modal .modal-svg {
   position: absolute;
   top: 0;
   left: 0;
-  height: 100%;
-  width: 100%;
-  border-radius: 3px;
+  border-radius: 0.4em;
 }
 #modal-container .modal-background .modal .modal-svg rect {
   stroke: #fff;
-  stroke-width: 2px;
+  stroke-width: 4px;
   stroke-dasharray: 778;
   stroke-dashoffset: 778;
 }
 
-
- /* modal 컨텐츠 css 및 버튼 css */
-/* .content {
-  min-height: 100%;
-  height: 100%;
-  background: white;
-  position: relative;
-  z-index: 0;
-}
-.content h1 {
-  padding: 75px 0 30px 0;
-  text-align: center;
-  font-size: 30px;
-  line-height: 30px;
-}
-.content .buttons {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0;
-  text-align: center;
-}
-.content .buttons .button {
-  display: inline-block;
-  text-align: center;
-  padding: 10px 15px;
-  margin: 10px;
-  background: red;
-  font-size: 18px;
-  background-color: #efefef;
-  border-radius: 3px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-}
-.content .buttons .button:hover {
-  color: white;
-  background: #009bd5;
-} */
 
 
 
