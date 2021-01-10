@@ -15,7 +15,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 <link rel="stylesheet" href="{% static 'main/css/dialog.css' %}">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
-        
+        <!-- Login -->
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lobster|Noto+Sans:400,700'><!-- Login 폰트 -->
+    <link rel="stylesheet" href="{% static 'main/css/login.css' %}">
+    
         
 	</head>
 	<body>
@@ -28,7 +31,7 @@
 						<li><a href="{% url 'index' %}">Home</a></li>
 						<li><a href="{% url 'generic' %}">Generic</a></li>
 						<li><a href="{% url 'elements' %}">Elements</a></li>
-						<li><a href=# id="six" onclick="dialog_click(this.id)"> Login</a></li>   
+						<li><a href=# id="six" onclick="dialog_click(this.id)" > Login</a></li>   
 						<li><a href="{% url 'dialog' %}">dialog</a></li>
 					</ul>
 				</nav>
@@ -37,20 +40,35 @@
 			<a href="#menu" class="navPanelToggle"><span class="fa fa-bars"> </span></a>
 
     
-        
+            
+
+
 <!-- dialog 창 view 설정 -->
-<div id="modal-container">
-  <div class="modal-background">
-    <div class="modal">
-        <h2>I'm a Modal</h2>
-        <p>Hear me roar.</p>
-        <!-- 외곽선 그려주는 건가봄 -->
-        <svg class="modal-svg" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="none">
-			<rect x="0" y="0" fill="none" width="226" height="162" rx="3" ry="3"></rect>
+<div id="modal-container" >
+    <div class="modal-background">
+        <div class="modal">
+        <!-- 애니메이션 효과 외곽선 -->
+           <svg class="modal-svg" xmlns="http://www.w3.org/2000/svg" width="22em" height="25em" preserveAspectRatio="none">
+			<rect x="0" y="0" fill="none" width="22em" height="25em" rx="3" ry="3"></rect>
 			</svg>
+        
+            <div class="modal_div">
+                <form method="post" action="#" class="login_form">{% csrf_token %}
+                    <center>
+                        <p class="login_logo">Login</p>
+                        <div class="10u$ (small) login_input">
+                            <input type="email" placeholder="input your email"/>
+                        </div>        
+                        <button type="submit" class="button login_button" style="margin-top:1em;">Login</button>
+                    </center>
+                </form> 
+            </div>
+      
+        </div>
     </div>
-  </div>
 </div>
+ <!-- dialog 창 설정 -->
+        
     
         
         

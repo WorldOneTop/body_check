@@ -190,7 +190,7 @@
   text-align: center;
   vertical-align: middle;
 }
-/* modal의 배경 그림 지정;;; */
+/* modal의 배경 그림(흰색의 dialog띄울 자리) 지정;;; */
 #modal-container .modal-background .modal {
   background: white;
   display: inline-block;
