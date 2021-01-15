@@ -1,22 +1,30 @@
-// 로그인.js에서 옮김
-$(".login_button").click(function(event) {
-  event.preventDefault();
-  $(".login_form").addClass('complete');
-//     form요소 클릭시 닫는걸 막지만 버튼 클릭시 dialog창 닫기 위해
-  $("#modal-container").addClass('out');
-  $('body').removeClass('modal-active');
-});
+// 로그인 form 이상 유무
+function checkForm_Login(){
+    var str = $('#input_email').val();
+    if(str.length==0){//빈 문자열시 submit은 안하고 창은 닫기
+        close_dialog();
+        return false;
+    }
+    else if(checkEmail(str)){//이메일 체크하고, 데이터베이스 확인
+        return true;
+    }
+    else{
+        $('#alert_email').text("email 형식을 확인해주세요.");
+        $('#alert_email').fadeIn(300);
+        $('#alert_email').fadeOut(900);
+    }
+    return false;//false 하면 이벤트 전파 막는듯(submit 안함?)
+};
 
 
 // form요소 클릭시 닫는거 막음(이벤트 전파 막기) bug fix
 $(".login_form").click(function(event) {
-    event.stopPropagation();
+    event.stopPropagation();;
 });
 
 //다이얼로그 끄기
 $('#modal-container').click(function(e){
-  $(this).addClass('out');
-  $('body').removeClass('modal-active');
+    close_dialog();
 });
 
 
@@ -32,4 +40,19 @@ function dialog_click(id) {
 
 
 
+// email 확인 정규식
+function checkEmail(myValue) {        
+    var email = myValue;
+    var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+        if(exptext.test(email)==false){
+            //이메일 형식이 알파벳+숫자@알파벳+숫자.알파벳+숫자 형식이 아닐경우            
+            return false;
+        };
+        return true;
+};
 
+//다이얼로그 끄기
+function close_dialog() {
+  $('#modal-container').addClass('out');
+  $('body').removeClass('modal-active');
+}

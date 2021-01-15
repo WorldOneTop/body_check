@@ -21,6 +21,10 @@
 </head>
 <body>
     
+  <h1>
+        {{val.email}}
+    </h1>
+    
 <!--     
 <form method="post" action="#" class="login_form ">{% csrf_token %}
     <center>
@@ -52,7 +56,7 @@
                     <center>
                         <p class="login_logo">Login</p>
                         <div class="10u$ (small) login_input">
-                            <input type="email" placeholder="input your email"/>
+                            <input type="email" name="email" placeholder="input your email"/>
                         </div>        
                         <button type="submit" class="button login_button" style="margin-top:1em;">Login</button>
                     </center>

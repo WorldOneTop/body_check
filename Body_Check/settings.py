@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 import json
 from django.core.exceptions import ImproperlyConfigured
+
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -92,8 +95,12 @@ WSGI_APPLICATION = 'Body_Check.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': get_secret("ENGINE"),
+        'NAME': get_secret("NAME"),
+        'USER': get_secret("USER"),
+        'PASSWORD': get_secret("PASSWORD"),
+        'HOST': get_secret("HOST"),
+        'PORT': get_secret("PORT"),
     }
 }
 

@@ -32,7 +32,6 @@
 						<li><a href="{% url 'generic' %}">Generic</a></li>
 						<li><a href="{% url 'elements' %}">Elements</a></li>
 						<li><a href=# id="six" onclick="dialog_click(this.id)" > Login</a></li>   
-						<li><a href="{% url 'dialog' %}">dialog</a></li>
 					</ul>
 				</nav>
 			</header>
@@ -42,32 +41,34 @@
     
             
 
-
+ <!-- 로그인 창 구현 -->
 <!-- dialog 창 view 설정 -->
 <div id="modal-container" >
     <div class="modal-background">
         <div class="modal">
         <!-- 애니메이션 효과 외곽선 -->
-           <svg class="modal-svg" xmlns="http://www.w3.org/2000/svg" width="22em" height="25em" preserveAspectRatio="none">
-			<rect x="0" y="0" fill="none" width="22em" height="25em" rx="3" ry="3"></rect>
+           <svg class="modal-svg" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="none">
+			<rect x="0" y="0" fill="none" width="22em" height="28em" rx="3" ry="3"></rect>
 			</svg>
         
             <div class="modal_div">
-                <form method="post" action="#" class="login_form">{% csrf_token %}
+                <form method="post" action="{% url 'login' %}" class="login_form" onsubmit="return checkForm_Login()" autocomplete="off">{% csrf_token %}
                     <center>
                         <p class="login_logo">Login</p>
                         <div class="10u$ (small) login_input">
-                            <input type="email" placeholder="input your email"/>
+                            <input type="text" id="input_email" placeholder="input your email"/>
+                            <input type="password" id="input_password" placeholder="input your password"/>
                         </div>        
-                        <button type="submit" class="button login_button" style="margin-top:1em;">Login</button>
+                        <button class="button login_button" style="margin-top:1em;">Login</button>
+                        <p style="margin-top:2em;color:white;" id="alert_email"></p>
                     </center>
                 </form> 
             </div>
       
         </div>
     </div>
-</div>
- <!-- dialog 창 설정 -->
+</div> <!-- dialog 창 설정 -->
+
         
     
         
