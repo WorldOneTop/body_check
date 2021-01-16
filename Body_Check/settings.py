@@ -15,7 +15,6 @@ import json
 from django.core.exceptions import ImproperlyConfigured
 
 
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -149,4 +148,19 @@ STATICFILES_FINDERS = (
 )
 
 STATIC_ROOT = '/var/www/myweb_static'
+
+
+# SMTP 설정
+EMAIL_HOST = 'smtp.gmail.com'
+# 메일을 호스트하는 서버
+EMAIL_PORT = '587'
+# gmail과의 통신하는 포트
+EMAIL_HOST_USER = get_secret('EMAIL_HOST_USER')
+# 발신할 이메일
+EMAIL_HOST_PASSWORD = get_secret('EMAIL_HOST_PASSWORD')
+# 발신할 메일의 비밀번호
+EMAIL_USE_TLS = True
+# TLS 보안 방법
+DEFAULT_FROM_EMAIL = '체단실 <'+EMAIL_HOST_USER+'>'
+# 사이트와 관련한 자동응답을 받을 이메일 주소,'webmaster@localhost'
 

@@ -6,6 +6,11 @@ function checkForm_Login(){
         return false;
     }
     else if(checkEmail(str)){//이메일 체크하고, 데이터베이스 확인
+        $(':focus').blur();
+        $('body').css("pointer-events","none");
+        $('#alert_email').text("로그인 중입니다.");
+        $('#alert_email').fadeIn(600);
+
         return true;
     }
     else{

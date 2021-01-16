@@ -21,55 +21,14 @@
 </head>
 <body>
     
-  <h1>
-        {{val.email}}
-    </h1>
-    
-<!--     
-<form method="post" action="#" class="login_form ">{% csrf_token %}
-    <center>
-        <p class="login_logo">Login</p>
-        <div class="10u$ (small) login_input">
-            <input type="email" placeholder="input your email"/> 
-        </div>
-        <button type="submit" class="button login_button" style="margin-top:1em;">Login</button>
-    </center>
-</form>   -->
 
+    <form action="{% url 'login' %}" method='post'>{% csrf_token %}
+        <input type="text" id="test" value="test">
+        <input type="submit">
+    </form>
     
     
-    <!-- 위는 login form 아래는 login 창 -->
     
-<a href=# id="six" onclick="dialog_click(this.id)" > 클릭 시 로그인 창 발현</a>
-
-<!-- dialog 창 view 설정 -->
-<div id="modal-container" >
-    <div class="modal-background">
-        <div class="modal">
-        <!-- 애니메이션 효과 외곽선 -->
-           <svg class="modal-svg" xmlns="http://www.w3.org/2000/svg" width="22em" height="25em" preserveAspectRatio="none">
-			<rect x="0" y="0" fill="none" width="22em" height="25em" rx="3" ry="3"></rect>
-			</svg>
-        
-            <div class="modal_div">
-                <form method="post" action="#" class="login_form">{% csrf_token %}
-                    <center>
-                        <p class="login_logo">Login</p>
-                        <div class="10u$ (small) login_input">
-                            <input type="email" name="email" placeholder="input your email"/>
-                        </div>        
-                        <button type="submit" class="button login_button" style="margin-top:1em;">Login</button>
-                    </center>
-                </form> 
-            </div>
-      
-        </div>
-    </div>
-</div>
-    
-    
-    <!-- login -->
-
     
     
 <!-- dialog -->
