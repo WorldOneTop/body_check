@@ -23,18 +23,15 @@
     
             
 
-<!--         
-    <script>
         
-        window.location.href = "{% url 'index' %}";
-        </script> -->
+    
         
         
 		<!-- Banner -->
         <div  style="height:100%">
 			<section id="banner"  style="height:100%">
-				<h2>이메일을 통해 인증을 완료해주세요</h2>
-                	<b><p style="text-transform: none">보내드린 주소  <br/> {{email}}</p></b>
+				<h2>{{h2}}</h2>
+                	<b><p style="text-transform: none">{{p1}}  <br/> {{p2}}</p></b>
 				<ul class="actions">
 					<li><a href="{% url 'index' %}" class="button special">go to main</a></li>
 				</ul>

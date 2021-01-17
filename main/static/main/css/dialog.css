@@ -4,6 +4,10 @@
   overflow: hidden;
 } */
 
+.shadow_all{
+    box-shadow : rgba(0,0,0,0.5) 0 0 0 9999px;
+    z-index : 1002;
+}
 #modal-container {
   position: fixed;
   display: table;
