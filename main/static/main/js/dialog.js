@@ -68,7 +68,7 @@ function checkForm_Login(){
                     document.getElementById("hidden_signup_form").submit();
                 }
             }
-        }) 
+        }); 
 
         
         

@@ -1,9 +1,8 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from django.shortcuts import get_object_or_404
 from django.core.mail import EmailMessage
-from .models import User
+from .models import User, OCR
 import random
 import string
 import json
@@ -11,7 +10,12 @@ import bcrypt
 import datetime
 import os
 from django.contrib.auth import logout as auth_logout
-
+from PIL import Image
+import pytesseract
+import cv2
+import time
+import numpy as np
+from . import vision
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -31,6 +35,10 @@ def elements(request):
     return render(request, 'main/elements.html')
 
 
+def test(request):
+    return render(request, 'main/test.html')
+
+
 def error(request):
     try:
         if(request.POST['case'] == '2'):
@@ -44,10 +52,6 @@ def error(request):
     except(KeyError):
         pass
     return render(request, 'main/error.html')
-
-
-def test(request):
-    return render(request, 'main/test.html')
 
 
 # 링크타고 회원가입하러 들어온 view
@@ -100,7 +104,7 @@ def login(request):
                      str(request.get_host())+'/signup/?key='+randomStr
                      , to=[request.POST['id']]).send()
 
-        return HttpResponse(randomStr)
+        return HttpResponse()
     # 등록된 id가 있을때
     else:
         # 비번이 맞을때
@@ -114,6 +118,51 @@ def login(request):
 def logout(request):
     auth_logout(request)
     return HttpResponseRedirect(reverse('index'))
+
+
+# start = time.time()
+# print("time :", time.time() - start)
+
+def upload_img(request):
+    first = time.time()
+    result = {}
+    file = OCR()
+    try:
+        file.photo = request.FILES['photo']
+        file.save()
+    except(KeyError):
+        print("upload_img : KeyError")
+        return HttpResponse(KeyError)
+
+    name = str(file.photo)[4:] # photo 값이 ocr/파일이름 으로 되버려서
+    path = str(file.photo.path)[:-len(name)]
+    
+    start = time.time()
+    output = vision.ocr(path+name)
+    result['ocrTime'] = time.time() - start
+    
+    start = time.time()
+    vision.saveImage(path, name, output.json())
+    result['imageSaveTime'] = time.time() - start
+
+    if (str(output) == "<Response [200]>"):
+        result["code"] = "200"
+        result["origin_img"] = '/media/ocr/'+name
+        result["result_img"] = "/media/ocr/result/"+name
+        # weight
+        # muscle
+        # fat
+        # left_arm
+        # right_arm
+        # left_leg
+        # right_leg
+
+    else:
+        print("response error : " ,output)
+        result['code'] = str(output)
+
+    result['allTime'] = time.time() - first
+    return HttpResponse(json.dumps(result))
 
 
 # json파일에 들어갈 dict양식
