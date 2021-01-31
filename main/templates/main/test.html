@@ -44,17 +44,30 @@ window.onload = function() {
 
                          $("#field").append("결과를 이미지파일로 만드는데 걸린 시간 : "+ obj['imageSaveTime'] );
                          $("#field").append("<br>");
+                         delete obj['allTime']
+                         delete obj['ocrTime']
+                         delete obj['imageSaveTime']
+                        
+                         origin_img = obj['origin_img']
+                         result_img = obj['result_img']
+                         delete obj['origin_img']
+                         delete obj['result_img']
+                         
+                         for (var key in obj){
+                             $("#field").append(key + " : " + obj[key]);
+                             $("#field").append("<br>");
+                        }
                          $("#field").append('왼쪽은 원본,   오른쪽은 결과 ')
                          $("#field").append("<br>");
-
+            
                         img1 = '<img src = "';
-                        img1 += obj['origin_img'];
+                        img1 += origin_img;
                         img1 += '"/>';
                         $("#field").append(img1);
                         
 
                         img1 = '<img src = "';
-                        img1 += obj['result_img'];
+                        img1 += result_img;
                         img1 += '"/>';
                         $("#field").append(img1);
                     },error:function(request,status,error){

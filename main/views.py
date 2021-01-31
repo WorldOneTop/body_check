@@ -39,6 +39,10 @@ def test(request):
     return render(request, 'main/test.html')
 
 
+def intro(request):
+    return render(request, 'main/intro.html')
+
+
 def error(request):
     try:
         if(request.POST['case'] == '2'):
@@ -139,16 +143,20 @@ def upload_img(request):
     
     start = time.time()
     output = vision.ocr(path+name)
+    # text = ['체중', '골격근량', '체지방률','체수분','단백질','무기질','체지방','BMI','제지방량','인바디점수']
+    output_result = vision.getImageResult(output.json(), path, name)
     result['ocrTime'] = time.time() - start
     
     start = time.time()
-    vision.saveImage(path, name, output.json())
-    result['imageSaveTime'] = time.time() - start
+    # vision.saveImage(path, name, output.json())
+    # result['imageSaveTime'] = time.time() - start
 
     if (str(output) == "<Response [200]>"):
         result["code"] = "200"
         result["origin_img"] = '/media/ocr/'+name
         result["result_img"] = "/media/ocr/result/"+name
+        for i,j in output_result.items():
+            result[i] = j
         # weight
         # muscle
         # fat

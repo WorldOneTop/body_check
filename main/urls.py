@@ -15,5 +15,6 @@ urlpatterns = [
     path('error/', views.error, name='error'),
     path('logout/', views.logout, name='logout'),
     path('upload_img/', views.upload_img, name='upload_img'),
+    path('intro/', views.intro, name='intro'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

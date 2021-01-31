@@ -33,14 +33,15 @@
 						<li><a href="{% url 'elements' %}">Elements</a></li>
 						<li>
                             {% if request.session.id %}
-                                <a href="{% url 'logout' %}" id="six">
+                                <a href="{% url 'logout' %}">
                             Logout
-                                    
+                                    </a>
                             {% else %}
-                                <a href="#" id="six" onclick="dialog_click(this.id)">
+                                <a href="#" onclick="dialog_click('six')">
                                 Login
+                                    </a>
                             {% endif%}
-                            </a></li>   
+                            </li>   
 					</ul>
 				</nav>
 			</header>
@@ -96,7 +97,17 @@
 				<h2>체단실</h2>
 				<b style="line-height:130%;"><p>Your personal body data in  <br/> this one Application.</p></b>
 				<ul class="actions">
-					<li><a href="#" class="button special">start</a></li>
+					<li>
+                        {% if request.session.id %}
+                        <a href="#" class="button special">start</a>
+                        
+                        {% else %}
+                        <a href="#" class="button special" onclick="dialog_click('six')">start</a>
+                        
+                        {% endif%}
+                    </li>
+                    
+                    
 				</ul>
 			</section>
         </div>
@@ -119,39 +130,12 @@
 					</div>
 				</section>
 
-			<!-- Two -->
-				<section id="two" class="wrapper style2 special">
-					<div class="container">
-						<header class="major">
-							<h2>Fusce ultrices fringilla</h2>
-							<p>Maecenas vitae tellus feugiat eleifend</p>
-						</header>
-						<div class="row 150%">
-							<div class="6u 12u$(xsmall)">
-								<div class="image fit captioned">
-									<img src="../../static/main/images/pic02.jpg" alt="" />
-									<h3>Lorem ipsum dolor sit amet.</h3>
-								</div>
-							</div>
-							<div class="6u$ 12u$(xsmall)">
-								<div class="image fit captioned">
-									<img src="../../static/main/images/pic03.jpg" alt="" />
-									<h3>Illum, maiores tempora cupid?</h3>
-								</div>
-							</div>
-						</div>
-						<ul class="actions">
-							<li><a href="#" class="button special big">Nulla luctus</a></li>
-							<li><a href="#" class="button big">Sed vulputate</a></li>
-						</ul>
-					</div>
-				</section>
-
+			
 			<!-- Three -->
 				<section id="three" class="wrapper style1">
 					<div class="container">
 						<header class="major special">
-							<h2>Mauris vulputate dolor</h2>
+							<h2>Ranker of the Month</h2>
 							<p>Feugiat sed lorem ipsum magna</p>
 						</header>
 						<div class="feature-grid">
@@ -219,6 +203,9 @@
 						<li><a href="#" class="icon fa-facebook"></a></li>
 						<li><a href="#" class="icon fa-twitter"></a></li>
 						<li><a href="#" class="icon fa-instagram"></a></li>
+                        <li><a href="#" class="icon fa-github"></a></li>
+                        <li><a href="#" class="icon fa-github"><img src = "{% static 'main/images/icon_velog.jpg' %}"/></a></li>
+
 					</ul>
 					<ul class="copyright">
 						<li>&copy; Untitled</li>
