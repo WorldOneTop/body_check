@@ -5,7 +5,7 @@
 	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
 -->
 {% load static %}
-<html>
+<html onclick="click_event()">
     <head>
         <title>체 단 실</title>
         <meta charset="utf-8" />
@@ -27,7 +27,7 @@
 
                 if (ve != null && ve.addEventListener) {
                     ve.addEventListener('ended',function () {
-                            window.location.href = "{% url 'test' %}";
+                            window.location.href = "{% url 'index' %}";
                         },
                         false
                     );
@@ -39,7 +39,6 @@
             });
             function click_event(){
                             window.location.href = "{% url 'index' %}";
-                
             };
         </script>
 
@@ -56,7 +55,7 @@
             }
         </style>
     </head>
-    <body style="background-color: #000;" onclick="click_event()">
+    <body style="background-color: #000;" >
         <video id="video" preload="auto" autoplay="true" muted="muted" volume="0">
             <source src="{% static 'main/images/roka_gym.mp4'%}" />
         </video>

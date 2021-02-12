@@ -28,7 +28,15 @@
 				<nav id="nav">
 					<ul>
 						<li><a href="{% url 'index' %}">Home</a></li>
-						<li><a href="{% url 'generic' %}">history</a></li>
+						<li>
+                            {% if request.session.id %}
+                                <a href="{% url 'mypage' %}">
+                            {% else %}
+                                <a href="#" onclick="dialog_click('six')">
+                            {% endif%}
+                            my Page</a>
+                        
+                        </li>
 						<li><a href="{% url 'generic' %}">Generic</a></li>
 						<li><a href="{% url 'elements' %}">Elements</a></li>
 						<li>
@@ -41,7 +49,7 @@
                                 Login
                                     </a>
                             {% endif%}
-                            </li>   
+                        </li>   
 					</ul>
 				</nav>
 			</header>
@@ -80,7 +88,6 @@
                     </center>
                 </form> 
             </div>
-      
         </div>
     </div>
 </div> <!-- dialog 창 설정 -->
@@ -92,7 +99,6 @@
         
 		<!-- Banner -->
         <div>
-            
 			<section id="banner">
 				<h2>체단실</h2>
 				<b style="line-height:130%;"><p>Your personal body data in  <br/> this one Application.</p></b>
@@ -201,16 +207,14 @@
 				<div class="container">
 					<ul class="icons">
 						<li><a href="#" class="icon fa-facebook"></a></li>
-						<li><a href="#" class="icon fa-twitter"></a></li>
 						<li><a href="#" class="icon fa-instagram"></a></li>
-                        <li><a href="#" class="icon fa-github"></a></li>
-                        <li><a href="#" class="icon fa-github"><img src = "{% static 'main/images/icon_velog.jpg' %}"/></a></li>
-
+                        <li><a href="https://github.com/worldonetop" target="_blank" class="icon fa-github"></a></li>
+                        <li><a href="https://velog.io/@dlwpdlf147" class="icon fa-vimeo-square" target="_blank"></a></li>
 					</ul>
 					<ul class="copyright">
-						<li>&copy; Untitled</li>
-						<li>Design: <a href="http://templated.co">TEMPLATED</a></li>
-						<li>Images: <a href="http://unsplash.com">Unsplash</a></li>
+						<li>&copy; 이제일</li>
+						<li>Design: <a href="https://templated.co/spatial" target="_blank">TEMPLATED</a></li>
+						<li>Create: <a href="https://velog.io/@dlwpdlf147" target="_blank">WorldOneTop</a></li>
 					</ul>
 				</div>
 			</footer>
@@ -220,7 +224,6 @@
 			<script src="{% static 'main/js/skel.min.js' %}"></script>
 			<script src="{% static 'main/js/util.js' %}"></script>
 			<script src="{% static 'main/js/main.js' %}"></script>
-            <script  src="{% static 'main/js/dialog.js' %}"></script>
 <!-- dialog -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
   <script src="{% static 'main/js/dialog.js' %}"></script>

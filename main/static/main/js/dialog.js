@@ -60,7 +60,7 @@ function checkForm_Login(){
                     sessionStorage.setItem('id', str);
                     setTimeout(function(){
                         location.reload();
-                        },700);
+                        },600);
                 }
                 //등록된id가 아닐때                
                 else{

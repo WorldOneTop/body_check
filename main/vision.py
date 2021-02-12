@@ -106,7 +106,7 @@ def saveImageResult(path, name, box_and_rgb):
     # 인식한 글자 넣기
     img = Image.open(path+"result/"+name)
     draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype(BASE_DIR + "/main/static/main/fonts/korean_font.ttf", 15) 
+    font = ImageFont.truetype(BASE_DIR + "/main/static/main/fonts/korean_font.ttf", 18) 
     
     for i in range(len(box_and_rgb)):
         for value in box_and_rgb[i][0]:
@@ -226,8 +226,6 @@ def getImageResult(json_dict, path, name, text=['체중', '골격근량', '체�
             if(cache):
                 send.append(cache)
                 result[value] = cache[2]
-            else:
-                result[value] = None
         saveImageResult(path, name, send)
         return result
     else:
@@ -236,7 +234,7 @@ def getImageResult(json_dict, path, name, text=['체중', '골격근량', '체�
             saveImageResult(path, name, cache)
             return {text:cache[2]}
         else:
-            return {text:None}
+            return None
 
 # 사용자가 결과지를 올렸을때 실행 해서 모든 결과 보여주기
 # def showResult(img_path, img_name, text=['체중', '골격근량', '체지방률']):

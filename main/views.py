@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.core.mail import EmailMessage
-from .models import User, OCR
+from .models import User, OCR, Change
 import random
 import string
 import json
@@ -10,21 +10,16 @@ import bcrypt
 import datetime
 import os
 from django.contrib.auth import logout as auth_logout
-from PIL import Image
-import pytesseract
-import cv2
-import time
-import numpy as np
 from . import vision
+from django.contrib.sessions.models import Session
+import time
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def index(request):
-    try:
-        return render(request, 'main/index.html')
-    except(KeyError):
-        return render(request, 'main/index.html')
+    request.session.clear_expired()# 유효하지 않은 세션을 모델에서 지움
+    return render(request, 'main/index.html')
 
 
 def generic(request):
@@ -43,16 +38,27 @@ def intro(request):
     return render(request, 'main/intro.html')
 
 
+def mypage(request):
+    try:
+        request.session['id']
+    except(KeyError):
+        return render(request, 'main/error.html', error_body(4))
+    return render(request, 'main/mypage.html')
+
+
 def error(request):
     try:
-        if(request.POST['case'] == '2'):
-            result = error_body(int(request.POST['case']))
-            result['p2'] = request.POST['m']
-            return render(request, 'main/error.html', result)
+        if(request.method == 'POST'):
+            if(request.POST['case'] == '2'):
+                return render(request, 'main/error.html', error_body(2, request.POST['m']))
 
+            else:
+                return render(request, 'main/error.html', error_body(request.POST['case']))
         else:
-            return render(request, 'main/error.html', error_body(request.POST['case']))
-
+            if(request.GET['case'] == '2'):
+                return render(request, 'main/error.html', error_body(2, request.GET['m']))
+            else:
+                return render(request, 'main/error.html', error_body(int(request.GET['case'])))
     except(KeyError):
         pass
     return render(request, 'main/error.html')
@@ -96,6 +102,7 @@ def login(request):
     try:
         user = User.objects.get(pk=request.POST['id'])
     except(KeyError):
+        print("login_Keyerror")
         return render(request, 'main/error.html', error_body(1))
     # 등록된id가 없을때
     except(User.DoesNotExist):
@@ -124,53 +131,56 @@ def logout(request):
     return HttpResponseRedirect(reverse('index'))
 
 
-# start = time.time()
-# print("time :", time.time() - start)
-
 def upload_img(request):
-    first = time.time()
     result = {}
-    file = OCR()
+    file = OCR() # 오브젝트 생성
     try:
         file.photo = request.FILES['photo']
+        file.owner = request.session['id']
         file.save()
     except(KeyError):
         print("upload_img : KeyError")
-        return HttpResponse(KeyError)
+        return render(request, 'main/error.html', error_body(1))
 
     name = str(file.photo)[4:] # photo 값이 ocr/파일이름 으로 되버려서
     path = str(file.photo.path)[:-len(name)]
-    
-    start = time.time()
+
     output = vision.ocr(path+name)
-    # text = ['체중', '골격근량', '체지방률','체수분','단백질','무기질','체지방','BMI','제지방량','인바디점수']
-    output_result = vision.getImageResult(output.json(), path, name)
-    result['ocrTime'] = time.time() - start
-    
-    start = time.time()
+    text = request.POST['text'].split(',')
+    output_result = vision.getImageResult(output.json(), path, name, text)
+
     # vision.saveImage(path, name, output.json())
     # result['imageSaveTime'] = time.time() - start
+    if(not output_result):
+        result["result_img"] = ""
+        return HttpResponse(json.dumps(result))
+    result["result_img"] = "/media/ocr/result/"+name
+    for i, j in output_result.items():
+        result[i] = j
 
-    if (str(output) == "<Response [200]>"):
-        result["code"] = "200"
-        result["origin_img"] = '/media/ocr/'+name
-        result["result_img"] = "/media/ocr/result/"+name
-        for i,j in output_result.items():
-            result[i] = j
-        # weight
-        # muscle
-        # fat
-        # left_arm
-        # right_arm
-        # left_leg
-        # right_leg
-
-    else:
-        print("response error : " ,output)
-        result['code'] = str(output)
-
-    result['allTime'] = time.time() - first
     return HttpResponse(json.dumps(result))
+
+
+# 사용자에게 이미지 보여줬으면 지우기(window.onbeforeunload 이벤트)
+def del_img(request):
+    instance = OCR.objects.filter(owner=request.session['id'])
+    # instance는 query set 객체들
+    for obj in instance:
+        obj.delete_file()
+        obj.delete()
+    return HttpResponse("")
+
+
+# change model insert
+def upload_change(request):
+    # 결과값 받아서 dict 형태로 저장
+    v = json.loads(request.POST['dict'])
+    # 빈 문자열 제거 및 리스트[{(key, value), (~~, ~~), ...}]로 변환
+    v = dict((i, j) for i, j in v.items() if j)
+    # insert ( **kwargs에 직접 dict형으로 주기위해서 **붙임)
+    v['email'] = User.objects.get(pk=request.session['id'])
+    Change.objects.create(**v)
+    return HttpResponse("")
 
 
 # json파일에 들어갈 dict양식
@@ -200,9 +210,9 @@ def signup_create(randomStr, dictStr):
         json.dump(jf, f)
 
 
-def error_body(case):
+def error_body(case, p2="", h2="", p1=""):
     body = {}
-    # 일반적인 에러페이지 (잘못된 접속 경로)
+    # 일반적인 에러페이지
     if case == 1:
         body['h2'] = '페이지에 문제가 발생했습니다.'
         body['p1'] = '메인 홈페이지를 이용해주세요.'
@@ -210,8 +220,16 @@ def error_body(case):
     elif case == 2:
         body['h2'] = '이메일을 통해 회원가입을 완료해주세요.'
         body['p1'] = '보내드린 주소'
+        body['p2'] = p2
     # 회원가입 링크 두번 클릭
     elif case == 3:
         body['h2'] = '이미 가입된 회원입니다.'
-
+    # 잘못된 접속 방식
+    elif case == 4:
+        body['h2'] = '잘못된 접속 방식입니다.'
+        body['p1'] = '메인 홈페이지를 이용해주세요.'
+    else:
+        body['h2'] = h2
+        body['p1'] = p1
+        body['p2'] = p2
     return body

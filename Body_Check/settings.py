@@ -169,3 +169,6 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = '체단실 <'+EMAIL_HOST_USER+'>'
 # 사이트와 관련한 자동응답을 받을 이메일 주소,'webmaster@localhost'
 
+# 세션 설정 AGE는 세션이 살아있을 시간(초), SAVEREQUEST => true는 request보낼 시 시간 늘어나고 false는 안늘어남
+SESSION_COOKIE_AGE = 60*60*2 # 두 시간
+SESSION_SAVE_EVERY_REQUEST = True

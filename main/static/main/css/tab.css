@@ -1,0 +1,72 @@
+
+.tabs{
+    overflow-x: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */   
+}
+.tabs::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+/* 위는 탭이 스크롤 하되 스크롤바 없애기 */
+/*  tabs의 글자 색깔*/
+.tabs > li {
+  transition-duration: 0.25s;
+  display: table-cell;
+  list-style: none;
+  text-align: center;
+  padding: 20px 20px 25px 20px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  color: black;
+}
+.tabs > li:before {
+  z-index: -1;
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 120%;
+  top: 0;
+  left: 0;
+  background-color: rgba(226, 226, 226, 0.3);
+  -webkit-transform: translateY(100%);
+  transform: translateY(100%);
+  transition-duration: 0.25s;
+  border-radius: 5px 5px 0 0;
+}
+.tabs > li:hover:before {
+  -webkit-transform: translateY(70%);
+  transform: translateY(70%);
+}
+/* 선택했을때 tabs의 글자 색깔 */
+.tabs > li.active {
+  color: #50555a;
+}
+/* 선택했을때 tabs의 버튼?색깔 */
+.tabs > li.active:before {
+  transition-duration: 0.5s;
+  background-color: #F6F6F6;
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+}
+
+.tab__content {
+  /* background-color: white; */
+  position: relative;
+  width: 100%;
+  border-radius: 5px;
+}
+.tab__content > li {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  list-style: none;
+}
+.tab__content > li .content__wrapper {
+  border-radius: 5px;
+  width: 100%;
+  padding: 0 5em;
+  background-color: #F6F6F6;
+}

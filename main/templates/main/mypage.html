@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>CodePen - Adaptive tabs</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+            href="https://fonts.googleapis.com/css?family=Open+Sans:400,300"
+            rel="stylesheet"
+            type="text/css"
+        />
+        <link rel="stylesheet" href="{% static 'main/css/main.css' %}" />
+        <link rel="stylesheet" href="{% static 'main/css/tab.css' %}" />
+        <link rel="stylesheet" href="{% static 'main/css/upload.css' %}" />
+
+    </head>
+    <body>
+        <!-- Header -->
+        <header id="header">
+            <h1>
+                <strong><a href="{% url 'index' %}">체단실</a></strong>
+            </h1>
+            <nav id="nav">
+                <ul>
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                    <li><a href="{% url 'mypage' %}">my Page</a></li>
+                    <li><a href="{% url 'generic' %}">Generic</a></li>
+                    <li><a href="{% url 'elements' %}">Elements</a></li>
+                    <li>
+                        {% if request.session.id %}
+                        <a href="{% url 'logout' %}">
+                            Logout
+                        </a>
+                        {% else %}
+                        <a href="#" onclick="dialog_click('six')">
+                            Login
+                        </a>
+                        {% endif%}
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <a href="#menu" class="navPanelToggle"><span class="fa fa-bars"> </span></a>
+
+        <!-- Main -->
+        <section id="main" class="wrapper">
+            <div class="container">
+                <!-- 탭들                 탭과 탭컨텐츠의 간격 조절-->
+                <ul class="tabs" style="margin: 0; padding: 0 8px;">
+                    <li class="active tabs_bg">
+                        <h1 style="text-transform: none;">
+                            Body Check
+                        </h1>
+                    </li>
+                    <li class="tabs_bg">
+                        <h1 style="text-transform: none;">
+                            History
+                        </h1>
+                    </li>
+                    <li class="tabs_bg">
+                        <h1 style="text-transform: none;">
+                            Feedback
+                        </h1>
+                    </li>
+                    <li class="tabs_bg">
+                        <h1 style="text-transform: none;">
+                            Ranking
+                        </h1>
+                    </li>
+                    <li class="tabs_bg">
+                        <h1 style="text-transform: none;">
+                            Account
+                        </h1>
+                    </li>
+                </ul>
+
+                <!-- 탭 컨텐츠들 -->
+                <ul class="tab__content">
+                    <!-- 탭 컨텐츠 (Body Check) -->
+                    <li class="active">
+                        <div class="content__wrapper">
+                            
+                            <header class="major special">
+                                <br />
+                                <h2>Body Check</h2>
+                                <p>당신의 신체 정보를 입력해주세요.</p>
+                            </header>
+                            
+                            <header>
+                                <p>결과 이미지를 인식하여 자동 입력합니다. (업로드한 이미지는 처리 후 즉시 폐기됩니다.)    </p>
+                            </header>
+                            <div class="row" style="margin-left: 0;">
+                                <ul class="actions vertical" style="min-width: 220px;">
+                                    <li>
+                                        <a
+                                            id = "retry"
+                                            href="javascript:retry_upload()"
+                                            class="button alt icon fas fa-undo"
+                                            >retry</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <form
+                                            class="upload"
+                                            method="post"
+                                            enctype="multipart/form-data"
+                                            id="image_upload_form"
+                                        >
+                                            {% csrf_token %}
+                                            <input
+                                                type="file"
+                                                class="drop-here"
+                                                accept="image/*"
+                                                id="image_upload_input"
+                                            />
+                                            <div class="text text-drop">인바디 업로드</div>
+                                            <div class="text text-upload">측정 값 확인 중</div>
+
+                                            <!-- 원그려주는 공간 확보 -->
+                                            <svg class="progress-wrapper" width="300" height="300" >
+                                                <circle id="ani_circle"
+                                                    class="progress"
+                                                    r="115"
+                                                    cx="150"
+                                                    cy="150"
+                                                ></circle>
+                                            </svg>
+                                            <!-- 끝난 후 V표시 그려주는 거 -->
+                                            <svg class="check-wrapper" width="130" height="130">
+                                                <polyline
+                                                    class="check"
+                                                    points="100.2,40.2 51.5,88.8 29.8,67.5 "
+                                                />
+                                            </svg>
+                                            <!-- 뒤의 무지갯빛 그림자 -->
+                                            <div class="shadow"></div>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <img alt="" id="result_image" onclick="image_click(this)" style="width:auto; height:auto; max-width:300px;min-width: 220px; max-height: 500px;cursor: pointer;"/>
+                                    </li>
+                                </ul>
+                                <div class="6u$ 12u$(small)">
+                                    <ul class="actions vertical">
+                                        <li>
+                                            <a
+                                                href="#"
+                                                class="button alt fit"
+                                                style="pointer-events: none;"
+                                                >찾을 항목 체크</a
+                                            >
+                                        </li>
+                                        <form>
+                                            <ul class="row" style="margin-left: 0;">
+                                                <li></li>
+                                                <li>
+                                                    <input
+                                                        type="checkbox"
+                                                        id="체중"
+                                                        name="bodycheck_check"
+                                                        checked
+                                                    />
+                                                    <label for="체중"
+                                                        >체중&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label
+                                                    >
+                                                </li>
+                                                <li>
+                                                    <input
+                                                        type="checkbox"
+                                                        id="골격근량"
+                                                        name="bodycheck_check"
+                                                        checked
+                                                    />
+                                                    <label for="골격근량">골격근량</label>
+                                                </li>
+                                                <li>
+                                                    <input
+                                                        type="checkbox"
+                                                        id="체지방률"
+                                                        name="bodycheck_check"
+                                                        checked
+                                                    />
+                                                    <label for="체지방률">체지방률</label>
+                                                </li>
+                                                <li>
+                                                    <input
+                                                        type="checkbox"
+                                                        id="체수분"
+                                                        name="bodycheck_check"
+                                                        checked
+                                                    />
+                                                    <label for="체수분"
+                                                        >체수분&nbsp;&nbsp;&nbsp;&nbsp;</label
+                                                    >
+                                                </li>
+                                                <li>
+                                                    <input
+                                                        type="checkbox"
+                                                        id="단백질"
+                                                        name="bodycheck_check"
+                                                        checked
+                                                    />
+                                                    <label for="단백질"
+                                                        >단백질&nbsp;&nbsp;&nbsp;&nbsp;</label
+                                                    >
+                                                </li>
+                                                <li>
+                                                    <input
+                                                        type="checkbox"
+                                                        id="무기질"
+                                                        name="bodycheck_check"
+                                                        checked
+                                                    />
+                                                    <label for="무기질"
+                                                        >무기질&nbsp;&nbsp;&nbsp;&nbsp;</label
+                                                    >
+                                                </li>
+                                                <li>
+                                                    <input
+                                                        type="checkbox"
+                                                        id="검사일시"
+                                                        name="bodycheck_check"
+                                                        checked
+                                                    />
+                                                    <label for="검사일시">검사일시</label>
+                                                </li>
+                                            </ul>
+                                        </form>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <br /><br />
+                            
+                            
+                            <header>
+                                <h2>결과 입력</h2>
+                                <p>
+                                    측정하신 인바디의 결과지를 활용하여 입력해주세요.
+                                </p>
+                            </header>
+
+
+                            <form method="post" action="#" id="form_submit">
+                                <div class="row uniform 50%">
+                                    <div class="3u 12u$(xsmall)">
+                                        <p style="margin:-3px">
+                                            체중
+                                        </p><input
+                                            type="number"
+                                            id="weight"
+                                            style="width: 100%;"
+                                        />
+                                    </div>
+                                    <div class="3u 12u$(xsmall)">
+                                      <p style="margin:-3px">
+                                            골격근량
+                                        </p><input
+                                            type="number"
+                                            id="muscle"
+                                            style="width: 100%;"
+                                        />
+                                    </div><div class="3u 12u$(xsmall)">
+                                        <p style="margin:-3px">
+                                            체지방률
+                                        </p><input
+                                            type="number"
+                                            id="fat"
+                                            style="width: 100%;"
+                                        />
+                                    </div>
+                                    <div class="3u$ 12u$(xsmall)">
+                                        <p style="margin:-3px">
+                                            체수분
+                                        </p><input
+                                            type="number"
+                                            id="water"
+                                            style="width: 100%;"
+                                        />
+                                    </div>
+                                </div>
+                                 <div class="row uniform 50%">
+                                    <div class="3u 12u$(xsmall)">
+                                        <p style="margin:-3px">
+                                            단백질 
+                                        </p><input
+                                            type="number"
+                                            id="protein"
+                                            style="width: 100%;"
+                                        />
+                                    </div>
+                                    <div class="3u 12u$(xsmall)">
+                                        <p style="margin:-3px">
+                                            무기질 
+                                        </p><input
+                                            type="number"
+                                            id="mineral"
+                                            style="width: 100%;"
+                                        />
+                                    </div>
+                                    <div class="6u$ 12u$(xsmall)">
+                                        <p style="margin:-3px">
+                                            검사일시
+                                        </p><input
+                                            type="date"
+                                            id="date"
+                                            style="width: 100%;"
+                                        />
+                                    </div>
+                                </div>
+                            </form>
+                            <section class="special">
+                            <button class="icon big special fa-upload" id="result_submit" style=""> submit&nbsp;</button>
+                            <button class="icon big special" id="submit_success"style="display:none;cursor: default" > &nbsp;&nbsp;&nbsp;success!</button>
+                                </section>
+                            <br>
+                        </div>
+                    </li>
+                    <!-- 탭 컨텐츠 (History) -->
+                    <li>
+                        <div class="content__wrapper"></div>
+                    </li>
+                    <!-- 탭 컨텐츠 (Feedback) -->
+                    <li>
+                        <div class="content__wrapper"></div>
+                    </li>
+                    <!-- 탭 컨텐츠 (Ranking) -->
+                    <li>
+                        <div class="content__wrapper"></div>
+                    </li>
+                    <!-- 탭 컨텐츠 (Account) -->
+                    <li>
+                        <div class="content__wrapper"></div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer id="footer">
+            <div class="container">
+                <ul class="icons">
+                    <li><a href="#" class="icon fa-facebook"></a></li>
+                    <li><a href="#" class="icon fa-instagram"></a></li>
+                    <li>
+                        <a
+                            href="https://github.com/worldonetop"
+                            target="_blank"
+                            class="icon fa-github"
+                        ></a>
+                    </li>
+                    <li>
+                        <a
+                            href="https://velog.io/@dlwpdlf147"
+                            class="icon fa-vimeo-square"
+                            target="_blank"
+                        ></a>
+                    </li>
+                </ul>
+                <ul class="copyright">
+                    <li>&copy; 이제일</li>
+                    <li>
+                        Design: <a href="https://templated.co/spatial" target="_blank">TEMPLATED</a>
+                    </li>
+                    <li>
+                        Create:
+                        <a href="https://velog.io/@dlwpdlf147" target="_blank">WorldOneTop</a>
+                    </li>
+                </ul>
+            </div>
+        </footer>
+        <!-- Scripts -->
+        <script src="{% static 'main/js/jquery.min.js' %}"></script>
+        <script src="{% static 'main/js/skel.min.js' %}"></script>
+        <script src="{% static 'main/js/util.js' %}"></script>
+        <script src="{% static 'main/js/main.js' %}"></script>
+        <script src="{% static 'main/js/tab.js' %}"></script>
+        <!-- ajax에서 scrf 위조 방지 -->
+        <script src="{% static 'main/js/ajax_scrf.js' %}"></script>
+        <!-- url 때문에 listener 추가  -->
+        <script>
+            var url = "{% url 'upload_img' %}";
+        </script>
+        <script src="{% static 'main/js/upload.js' %}"></script>
+    </body>
+</html>
