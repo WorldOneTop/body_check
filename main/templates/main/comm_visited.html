@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+{% load static %}
+<html>
+	<head>
+		<title>체 단 실</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- image zoom -->
+            <link rel="stylesheet"  href="{% static 'main/css/image-zoom.css' %}"/>
+        <!-- dialog -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<link rel="stylesheet" href="{% static 'main/css/dialog.css' %}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+        <!-- Login -->
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lobster|Noto+Sans:400,700'><!-- Login 폰트 -->
+        <!-- 폰트어썸 -->
+    <link rel="stylesheet" href="{% static 'main/css/login.css' %}">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+<script src="https://kit.fontawesome.com/f54e2de30e.js" crossorigin="anonymous"></script>
+            <link rel="stylesheet" href="{% static 'main/css/main.css' %}" />
+
+       
+          <!-- 새로 파일 만들기엔 너무 적어서 -->
+        <style>
+            textarea{resize:none;}
+        </style>
+	</head>
+	<body style="padding-top: 4em;">
+        <!-- popup div -->
+    <div id = "popup">
+        <i id="popup_close" class="fas fa-times-circle" onclick="document.getElementById('popup').style.display='none';"></i>
+        <div id = "popup_contents">
+        </div>
+    </div>
+
+		<!-- Header -->
+			<header id="header">
+				<h1 style="text-transform: none;"><strong><a href="{% url 'index' %}">체단실</a></strong> 
+                         {% if request.session.id %}
+                        &nbsp;&nbsp; {{aka}}
+                    {% else %}
+                        &nbsp;&nbsp;by &nbsp;△ 이제일
+                    {% endif%}
+                
+                </h1>
+				<nav id="nav">
+					<ul>
+						<li><a href="{% url 'index' %}">Home</a></li>
+						<li><a href="{% url 'mypage' %}">my Page</a></li>
+						<li><a href="{% url 'information' %}">Information</a></li>
+						<li><a href="{% url 'community' isBug=0 num=0 %}" style="color:red;">Community</a></li>
+						<li><a href="{% url 'logout' to='community' %}">Logout</a>
+                        </li>   
+					</ul>
+				</nav>
+			</header>
+        
+			<a href="#menu" class="navPanelToggle"><span class="fas fa-bars"> </span></a>
+
+    
+        
+        
+        
+		<!-- Main -->
+			<section class="wrapper" style="padding-bottom: 2em;">
+				<div class="container" id='content'>
+                    <div><h2 style="text-transform: none;margin:3px;"></h2><p style="width: 100%;text-align: right;"></p></div>
+                    <p></p>
+                    <img id="imageFile">
+                </div>
+                <div id="revise" style="margin: 0;margin-top:2em;text-align: center;">
+                    <button style="" class="icon big special fas fa-edit" onclick="comm_revise(this);"> 글 수정 </button>
+                    <button style="" class="icon big special fas fa-trash" onclick="comm_delete(this);"> 글 삭제 </button>
+                </div>
+        </section>
+        
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="container">
+					<ul class="icons">
+						<li><a href="https://www.facebook.com/profile.php?id=100005084624729" class="icon fas fa-facebook-square"></a></li>
+						<li><a href="https://www.instagram.com/dlwpdlf147/" class="icon fas fa-instagram"></a></li>
+                        <li><a href="https://github.com/worldonetop" target="_blank" class="icon fas fa-github-square"></a></li>
+                        <li><a href="https://velog.io/@dlwpdlf147" class="icon fas fa-vimeo-square" target="_blank"></a></li>
+					</ul>
+					<ul class="copyright">
+						<li>&copy; 이제일</li>
+						<li>Design: <a href="https://templated.co/spatial" target="_blank">TEMPLATED</a></li>
+						<li>Create: <a href="https://velog.io/@dlwpdlf147" target="_blank">WorldOneTop</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="{% static 'main/js/jquery.min.js' %}"></script>
+			<script src="{% static 'main/js/skel.min.js' %}"></script>
+			<script src="{% static 'main/js/util.js' %}"></script>
+			<script src="{% static 'main/js/main.js' %}"></script>
+        <script src="{% static 'main/js/image-zoom.min.js' %}"></script>
+        
+        <!-- ajax에서 scrf 위조 방지 -->
+          <script src="{% static 'main/js/ajax_scrf.js' %}"></script>
+        <!-- 전용 js -->
+          <script src="{% static 'main/js/community.js' %}">init_comm_write();</script>
+        <script>init_comm_visited({{ data|safe }});</script>
+
+	</body>
+</html>

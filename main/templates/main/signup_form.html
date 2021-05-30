@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+{% load static %}
+<html style="height:100%">
+	<head>
+		<title>체 단 실</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+            <link rel="stylesheet" href="{% static 'main/css/main.css' %}" />
+        <!-- dialog -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+        
+	</head>
+	<body style="height:100%">
+
+		<!-- Header -->
+			<header id="header" class="alt">
+				<h1><strong><a href="{% url 'index' %}">체단실</a></strong> &nbsp;&nbsp;by △이제일</h1>
+				
+			</header>
+        
+			<a href="{% url 'index' %}" class="navPanelToggle"><span class="fa fa-bars"> </span></a>
+
+    
+            
+<script type="text/javascript">
+    var noneValue = "{{ noneValue }}";
+    var age = "{{ age }}";
+    var key = "{{ key }}";
+       window.onload = function() {
+           if(noneValue != ""){
+               alert("정보를 모두 입력해주세요.");
+           }
+           else if(age != ""){
+               alert('나이는 양의 정수만 입력해주세요.')
+           }
+           else if(key != ""){
+               alert('키는 양수만 입력해주세요.')
+           }
+    }
+       function func_submit(){
+           form = document.getElementById("form_submit");
+           form.action = window.location.href;
+           form.submit();
+       }
+    
+</script>
+         
+                           
+		<!-- Banner -->
+        <div  style="height:100%">
+			<section id="banner"  style="height:100%">
+				<h2>다음의 정보를 입력해주세요.</h2>
+                <div class=" uniform 50%">
+                <form method="post" action="#"  id="form_submit">{% csrf_token %}
+                                <div class=" uniform 50%">
+                                    <div class="3u$ 12u$(xsmall)"
+                                         style="margin-left: 50%;transform: translateX(-50%);">
+                                        <p style="margin:0;text-transform: none;">
+                                            비밀번호(default : 기존입력)
+                                        </p><input
+                                            type="password"
+                                            name="pw"
+                                            style="background-color:white;"
+                                            value="{{pw}}"
+                                        />
+                                    </div>
+                                    <div class="3u$ 12u$(xsmall)"
+                                         style="margin-left: 50%;transform: translateX(-50%);">
+                                      <p style="margin:0;">
+                                            나이
+                                        </p><input
+                                            type="number"
+                                            name="age"
+                                            style="width: 100%;"
+                                            min="0" max="100"
+                                        />
+                                    </div><div class="3u$ 12u$(xsmall)"
+                                         style="margin-left: 50%;transform: translateX(-50%);">
+                                        <p style="margin:0">
+                                            신장
+                                        </p><input
+                                            type="number"
+                                            name="height"
+                                            style="width: 100%;"
+                                        />
+                                    </div>
+                                    <div class="3u$ 12u$(xsmall) "
+                                         style="margin-left: 50%;transform: translateX(-50%);">
+                                        <p style="margin:0" class="12u$">
+                                            성별
+                                        </p>
+                                        <select name="sex" id="updateDate" onchange="updateDate(this)" style="background-color: #fff;">
+                                            <option value="0">남성</option>
+                                            <option value="1">여성</option>
+                                        </select>
+                                    </div>
+                                </div>
+                <br><br>
+                    
+                            </form>
+                </div>
+				<ul class="actions">
+					<li><button class="special" onclick="func_submit()">
+                                회원가입
+                        </button></li>
+				</ul>
+			</section>
+        </div>
+
+	</body>
+</html>

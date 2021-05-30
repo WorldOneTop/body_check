@@ -17,35 +17,47 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
         <!-- Login -->
 <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lobster|Noto+Sans:400,700'><!-- Login 폰트 -->
+        <!-- 폰트어썸 -->
     <link rel="stylesheet" href="{% static 'main/css/login.css' %}">
-        
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+<script src="https://kit.fontawesome.com/f54e2de30e.js" crossorigin="anonymous"></script>
+
 	</head>
 	<body>
 
 		<!-- Header -->
 			<header id="header" class="alt">
-				<h1><strong><a href="{% url 'index' %}">체단실</a></strong> &nbsp;&nbsp;by &nbsp;△ 이제일</h1>
+				<h1 style="text-transform: none;"><strong><a href="{% url 'index' %}">체단실</a></strong> 
+                    {% if request.session.id %}
+                        &nbsp;&nbsp; {{aka}}
+                    {% else %}
+                        &nbsp;&nbsp;by &nbsp;△ 이제일
+                    {% endif%}
+                
+                </h1>
 				<nav id="nav">
 					<ul>
-						<li><a href="{% url 'index' %}">Home</a></li>
+						<li><a href="{% url 'index' %}" style="color:#f00d;">Home</a></li>
 						<li>
                             {% if request.session.id %}
                                 <a href="{% url 'mypage' %}">
                             {% else %}
-                                <a href="#" onclick="dialog_click('six')">
+                                <a href="#" onclick="dialog_click('six', 'mypage')">
                             {% endif%}
                             my Page</a>
                         
                         </li>
+						<li><a href="{% url 'information' %}">Information</a></li>
+						<li><a href="{% url 'community' num=0 isBug=0 %}">Community</a></li>
 						<li><a href="{% url 'generic' %}">Generic</a></li>
 						<li><a href="{% url 'elements' %}">Elements</a></li>
 						<li>
                             {% if request.session.id %}
-                                <a href="{% url 'logout' %}">
+                                <a href="{% url 'logout' to='index' %}">
                             Logout
                                     </a>
                             {% else %}
-                                <a href="#" onclick="dialog_click('six')">
+                                <a href="#" onclick="dialog_click('six', '')">
                                 Login
                                     </a>
                             {% endif%}
@@ -54,7 +66,7 @@
 				</nav>
 			</header>
         
-			<a href="#menu" class="navPanelToggle"><span class="fa fa-bars"> </span></a>
+			<a href="#menu" class="navPanelToggle"><span class="fas fa-bars"> </span></a>
 
     
         <!-- hidden form because of login -->
@@ -82,9 +94,10 @@
                         <div class="10u$ (small) login_input">
                             <input type="text" id="input_email" placeholder="input your email"/>
                             <input type="password" id="input_password" placeholder="input your password"/>
-                        </div>        
-                        <input type = 'submit' class="button login_button" style="margin-top:1em;" value='login'/>
-                        <p style="margin-top:2em;color:white;" id="alert_email"></p>
+                        </div>
+                            <p style="font-size: 9pt;color: #FFF8;font-family: 굴림;">회원이 아닐경우 회원가입이 진행됩니다.</p>
+                        <input type = 'submit' class="button login_button" style="margin-top:1em;padding:0 1.5em" value='login'/>
+                        <p style="margin-top:1em;color:white;" id="alert_email"></p>
                     </center>
                 </form> 
             </div>
@@ -92,10 +105,6 @@
     </div>
 </div> <!-- dialog 창 설정 -->
 
-        
-        
-    
-        
         
 		<!-- Banner -->
         <div>
@@ -108,7 +117,7 @@
                         <a href="#" class="button special">start</a>
                         
                         {% else %}
-                        <a href="#" class="button special" onclick="dialog_click('six')">start</a>
+                        <a href="#" class="button special" onclick="dialog_click('six', '')">start</a>
                         
                         {% endif%}
                     </li>
@@ -206,10 +215,10 @@
 			<footer id="footer">
 				<div class="container">
 					<ul class="icons">
-						<li><a href="#" class="icon fa-facebook"></a></li>
-						<li><a href="#" class="icon fa-instagram"></a></li>
-                        <li><a href="https://github.com/worldonetop" target="_blank" class="icon fa-github"></a></li>
-                        <li><a href="https://velog.io/@dlwpdlf147" class="icon fa-vimeo-square" target="_blank"></a></li>
+						<li><a href="https://www.facebook.com/profile.php?id=100005084624729" class="icon fas fa-facebook-square"></a></li>
+						<li><a href="https://www.instagram.com/dlwpdlf147/" class="icon fas fa-instagram"></a></li>
+                        <li><a href="https://github.com/worldonetop" target="_blank" class="icon fas fa-github-square"></a></li>
+                        <li><a href="https://velog.io/@dlwpdlf147" class="icon fas fa-vimeo-square" target="_blank"></a></li>
 					</ul>
 					<ul class="copyright">
 						<li>&copy; 이제일</li>
@@ -230,8 +239,6 @@
         
         <!-- ajax에서 scrf 위조 방지 -->
           <script src="{% static 'main/js/ajax_scrf.js' %}"></script>
-
-    
 
 	</body>
 </html>

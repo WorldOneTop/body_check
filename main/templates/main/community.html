@@ -1,0 +1,234 @@
+<!DOCTYPE HTML>
+{% load static %}
+<html>
+	<head>
+		<title>체 단 실</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- dialog -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<link rel="stylesheet" href="{% static 'main/css/dialog.css' %}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+        <!-- Login -->
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lobster|Noto+Sans:400,700'><!-- Login 폰트 -->
+        <!-- 폰트어썸 -->
+    <link rel="stylesheet" href="{% static 'main/css/login.css' %}">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+<script src="https://kit.fontawesome.com/f54e2de30e.js" crossorigin="anonymous"></script>
+            <link rel="stylesheet" href="{% static 'main/css/main.css' %}" />
+        
+        <!-- 새로 파일 만들기엔 너무 적어서 -->
+        <style>
+            .board_pageDiv a{color:black;}
+            .board_content_tBody td{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;}
+            .fa-lock{
+                margin-left: 1em;
+            }
+            .fa-cut{
+                margin-left: 1em;
+            }
+        </style>
+        
+	</head>
+	<body style="padding-top: 4em;">
+        
+        <!-- popup div -->
+    <div id = "popup">
+        <i id="popup_close" class="fas fa-times-circle" onclick="document.getElementById('popup').style.display='none';"></i>
+        <div id = "popup_contents">
+        </div>
+    </div>
+
+		<!-- Header -->
+			<header id="header">
+				<h1 style="text-transform: none;"><strong><a href="{% url 'index' %}">체단실</a></strong> 
+                    {% if request.session.id %}
+                        &nbsp;&nbsp;&nbsp; {{aka}}
+                    {% else %}
+                        &nbsp;&nbsp;by &nbsp;△ 이제일
+                    {% endif%}
+                
+                </h1>
+				<nav id="nav">
+					<ul>
+						<li><a href="{% url 'index' %}">Home</a></li>
+						<li>
+                            {% if request.session.id %}
+                                <a href="{% url 'mypage' %}">
+                            {% else %}
+                                <a href="#" onclick="dialog_click('six', 'mypage')">
+                            {% endif%}
+                            my Page</a>
+                        
+                        </li>
+						<li><a href="{% url 'information' %}">Information</a></li>
+						<li><a href="{% url 'community' num=0 isBug=0 %}" style="color:red;">Community</a></li>
+						<li>
+                            {% if request.session.id %}
+                                <a href="{% url 'logout' to='community' %}">
+                            Logout
+                                    </a>
+                            {% else %}
+                                <a href="#" onclick="dialog_click('six', '')">
+                                Login
+                                    </a>
+                            {% endif%}
+                        </li>   
+					</ul>
+				</nav>
+			</header>
+        
+			<a href="#menu" class="navPanelToggle"><span class="fas fa-bars"> </span></a>
+
+    
+        <!-- hidden form because of login -->
+            <div style="display:none">
+                <form method = "post" id="hidden_signup_form" action="{% url 'error' %}">{% csrf_token %}
+                    <input type="text" name ="case" value="2">
+                    <input type="text" name ="m" id="hidden_input_email">
+                </form>
+        </div>  
+
+ <!-- 로그인 창 구현 -->
+<!-- dialog 창 view 설정 -->
+<div id="modal-container" style="z-index: 1005;">
+    <div class="modal-background">
+        <div class="modal">
+        <!-- 애니메이션 효과 외곽선 -->
+           <svg class="modal-svg" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="none">
+			<rect x="0" y="0" fill="none" width="22em" height="28em" rx="3" ry="3"></rect>
+			</svg>
+        
+            <div class="modal_div">
+                <form method="post" class="login_form" onsubmit="return checkForm_Login()" autocomplete="off" style="margin:0;" >{% csrf_token %}
+                    <center>
+                        <p class="login_logo">Login</p>
+                        <div class="10u$ (small) login_input" style="float:center;margin-left:1.5em;">
+                            <input type="text" id="input_email" placeholder="input your email"/>
+                            <input type="password" id="input_password" placeholder="input your password"/>
+                        </div>
+                            <p style="font-size: 9pt;color: #FFF8;font-family: 굴림;margin:0;">회원이 아닐경우 회원가입이 진행됩니다.</p>
+                        <input type = 'submit' class="button login_button" style="margin-top:1em;padding:0 1.5em" value='login'/>
+                        <p style="margin-top:1em;color:white;" id="alert_email"></p>
+                    </center>
+                </form> 
+            </div>
+        </div>
+    </div>
+</div> <!-- dialog 창 설정 -->
+
+        
+        
+        
+        
+		<!-- Main -->
+			<section id="main" class="wrapper">
+				<div class="container">
+
+					<header class="major special">
+						<h2>Community</h2>
+						<p>free board &amp; bug report</p>
+					</header>
+                     
+					<header class="major special">
+						<h4 style="margin-right:1em;cursor:pointer;color:#f32853;" id="h_board" onclick="comm_clickHeader(0);">자유 게시판</h4>
+						<h4 style="margin-right:1em;cursor:pointer;" id="h_bug" onclick="comm_clickHeader(1);">버그 및 건의 게시판</h4>
+					<hr style="margin:0;">
+					</header>
+                    
+				</div>
+                  <!-- 검색 창 -->
+                    <div class=" container row" style="padding-left: 0px;margin:0 auto;">
+                        <div class="3u" style="padding-left: 0px;">
+                            <select>
+                                <option value=0>작성자</option>
+                                <option value=1>제목+내용</option>
+                            </select>
+                        </div>
+                        <div class="9u row">
+                            <input 
+                                   type="text"
+                                   id="board_search"
+                                   onKeypress="if(event.keyCode==13) {this.parentNode.children[1].click();}"
+                                   />
+                            <i class="fas fa-search fa-2x" onclick="info_search(this);" style="position: absolute;padding: 6px;margin-left: -45px;"></i>
+                        </div>
+                        </div>
+                        <br/><br/>
+                <div class="container" >
+                    <button class ="alt icon fas fa-edit"style="float:right" onclick="comm_edit('{{ request.session.id }}');"> 글 작성 </button>
+                </div>
+                
+                <div class="container" id="board_div" style="display:none">
+                    <table style="table-layout:fixed;">
+									<thead>
+										<tr class="12u">
+											<th class = "2u" style="padding-right: 0px;font-size: 0.8em;">작성자</th>
+											<th class = "8u" style="font-size: 0.8em;">글 제목</th>
+											<th class = "2u" style="padding-right: 0px;padding-left: 0px;font-size: 0.8em;">작성일시</th>
+										</tr>
+									</thead>
+									<tbody class="board_content_tBody" id="list">
+									</tbody>
+								</table>
+                     <!-- 페이지 넘기는 번호들 -->
+                    <p style="text-align: center;" class="board_pageDiv">
+                        <a><i class="fas fa-angle-double-left" style="margin-right:4px;"> </i></a>
+                        <a><i class="fas fa-angle-left" style="margin-right:7px;"></i></a>
+                        <a> 1 </a>
+                        <a> 2 </a>
+                        <a> 3 </a>
+                        <a><i class="fas fa-angle-right" style="margin-left:7px;"></i></a>
+                        <a><i class="fas fa-angle-double-right" style="margin-left:4px;"> </i></a>
+                    </p>
+                </div>
+                
+        </section>
+        
+        
+        
+        
+        
+        
+        
+        
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="container">
+					<ul class="icons">
+						<li><a href="https://www.facebook.com/profile.php?id=100005084624729" class="icon fas fa-facebook-square"></a></li>
+						<li><a href="https://www.instagram.com/dlwpdlf147/" class="icon fas fa-instagram"></a></li>
+                        <li><a href="https://github.com/worldonetop" target="_blank" class="icon fas fa-github-square"></a></li>
+                        <li><a href="https://velog.io/@dlwpdlf147" class="icon fas fa-vimeo-square" target="_blank"></a></li>
+					</ul>
+					<ul class="copyright">
+						<li>&copy; 이제일</li>
+						<li>Design: <a href="https://templated.co/spatial" target="_blank">TEMPLATED</a></li>
+						<li>Create: <a href="https://velog.io/@dlwpdlf147" target="_blank">WorldOneTop</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="{% static 'main/js/jquery.min.js' %}"></script>
+			<script src="{% static 'main/js/skel.min.js' %}"></script>
+			<script src="{% static 'main/js/util.js' %}"></script>
+			<script src="{% static 'main/js/community.js' %}"></script>
+			<script src="{% static 'main/js/main.js' %}"></script>
+<!-- dialog -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script src="{% static 'main/js/dialog.js' %}"></script>
+        
+        <!-- ajax에서 scrf 위조 방지 -->
+          <script src="{% static 'main/js/ajax_scrf.js' %}"></script>
+        <!-- 전용 js -->
+          <script src="{% static 'main/js/community.js' %}"></script>
+        
+        <script>init_comm({{ list|safe }});</script>
+
+	</body>
+</html>

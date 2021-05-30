@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>CodePen - Adaptive tabs</title>
+        <title>체 단 실</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link
             href="https://fonts.googleapis.com/css?family=Open+Sans:400,300"
@@ -13,64 +13,72 @@
         <link rel="stylesheet" href="{% static 'main/css/main.css' %}" />
         <link rel="stylesheet" href="{% static 'main/css/tab.css' %}" />
         <link rel="stylesheet" href="{% static 'main/css/upload.css' %}" />
-
+    <link rel="stylesheet" href="{% static 'main/css/highchart.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/login.css' %}">
+            <link rel="stylesheet"  href="{% static 'main/css/image-zoom.css' %}"/>
+        
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+<script src="https://kit.fontawesome.com/f54e2de30e.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{% static 'main/css/scroll.css' %}">
     </head>
     <body>
+        <!-- popup div -->
+    <div id = "popup">
+        <i id="popup_close" class="fas fa-times-circle" onclick="document.getElementById('popup').style.display='none';"></i>
+        <div id = "popup_contents">
+        </div>
+    </div>
+        
         <!-- Header -->
         <header id="header">
             <h1>
-                <strong><a href="{% url 'index' %}">체단실</a></strong>
+                <strong>{{aka}}</strong>
             </h1>
             <nav id="nav">
-                <ul>
-                    <li><a href="{% url 'index' %}">Home</a></li>
-                    <li><a href="{% url 'mypage' %}">my Page</a></li>
-                    <li><a href="{% url 'generic' %}">Generic</a></li>
-                    <li><a href="{% url 'elements' %}">Elements</a></li>
-                    <li>
-                        {% if request.session.id %}
-                        <a href="{% url 'logout' %}">
-                            Logout
-                        </a>
-                        {% else %}
-                        <a href="#" onclick="dialog_click('six')">
-                            Login
-                        </a>
-                        {% endif%}
-                    </li>
-                </ul>
-            </nav>
+					<ul>
+						<li><a href="{% url 'index' %}">Home</a></li>
+						<li><a href="{% url 'mypage' %}" style="color:red;">my Page</a></li>
+						<li><a href="{% url 'information' %}">Information</a></li>
+						<li><a href="{% url 'community' num=0 isBug=0 %}">Community</a></li>
+						<li><a href="{% url 'logout' to='index' %}">Logout</a></li>   
+					</ul>
+				</nav>
         </header>
         <a href="#menu" class="navPanelToggle"><span class="fa fa-bars"> </span></a>
 
         <!-- Main -->
-        <section id="main" class="wrapper">
+        <section id="main" class="wrapper" style="padding-bottom:0;">
+            
+        <!-- tab 배경색 div -->
+        <div id="tab_content_background">
+        </div>
             <div class="container">
                 <!-- 탭들                 탭과 탭컨텐츠의 간격 조절-->
-                <ul class="tabs" style="margin: 0; padding: 0 8px;">
-                    <li class="active tabs_bg">
+                <ul class="tabs" style="margin: 0; padding: 0 8px;" id="tabs">
+                    <li class="active tabs_bg tab1" onclick="document.getElementById('popup').children[0].click();">
                         <h1 style="text-transform: none;">
                             Body Check
                         </h1>
-                    </li>
-                    <li class="tabs_bg">
-                        <h1 style="text-transform: none;">
+                    </li>                        
+                    <!-- 누르고나서 그래프 만들어지는 애니메이션 만들기위해서 -->
+                    <li class="tabs_bg tab2" onclick="init_tab(1,{{ chart|safe }});drawData(1);document.getElementById('popup').children[0].click();" id="tabIcon_history">
+                        <h1 style="text-transform: none;">            
                             History
                         </h1>
                     </li>
-                    <li class="tabs_bg">
+                    <li class="tabs_bg tab3" onclick="init_tab(2, {{ spec|safe }});document.getElementById('popup').children[0].click();">
+                        <h1 style="text-transform: none;">
+                            Body Profile
+                        </h1>
+                    </li>
+                    <li class="tabs_bg tab4" onclick="init_tab(3,{{ feed|safe }});document.getElementById('popup').children[0].click();" id="tabIcon_feedback">
                         <h1 style="text-transform: none;">
                             Feedback
                         </h1>
                     </li>
-                    <li class="tabs_bg">
+                    <li class="tabs_bg tab5" onclick="init_tab(4,{{ account|safe }});document.getElementById('popup').children[0].click();" id="tabIcon_account">
                         <h1 style="text-transform: none;">
-                            Ranking
-                        </h1>
-                    </li>
-                    <li class="tabs_bg">
-                        <h1 style="text-transform: none;">
-                            Account
+                            Setting
                         </h1>
                     </li>
                 </ul>
@@ -79,27 +87,33 @@
                 <ul class="tab__content">
                     <!-- 탭 컨텐츠 (Body Check) -->
                     <li class="active">
-                        <div class="content__wrapper">
-                            
+                        <div class="content__wrapper  tab1" >
                             <header class="major special">
                                 <br />
                                 <h2>Body Check</h2>
-                                <p>당신의 신체 정보를 입력해주세요.</p>
+                                <p>신체 정보 입력</p>
                             </header>
                             
                             <header>
-                                <p>결과 이미지를 인식하여 자동 입력합니다. (업로드한 이미지는 처리 후 즉시 폐기됩니다.)    </p>
+                                <h2>
+                                    인바디 스캔 <i class="fas fa-question-circle" onclick="popup_inbody(event);"></i>
+                                </h2>
+                                <p>인바디 결과 이미지를 인식하여 자동 입력합니다. (업로드한 이미지는 처리 후 즉시 폐기됩니다.)    </p>
+                                
+
                             </header>
                             <div class="row" style="margin-left: 0;">
-                                <ul class="actions vertical" style="min-width: 220px;">
+                                <ul class="actions vertical" >
                                     <li>
-                                        <a
+                                        <button
                                             id = "retry"
-                                            href="javascript:retry_upload()"
-                                            class="button alt icon fas fa-undo"
-                                            >retry</a
+                                            onclick="retry_upload()"
+                                            class="big alt icon fas fa-undo"
+                                            style="background-color:white"
+                                            >retry</button
                                         >
                                     </li>
+
                                     <li>
                                         <form
                                             class="upload"
@@ -118,7 +132,7 @@
                                             <div class="text text-upload">측정 값 확인 중</div>
 
                                             <!-- 원그려주는 공간 확보 -->
-                                            <svg class="progress-wrapper" width="300" height="300" >
+                                            <svg class="progress-wrapper" width="100%" height="100%">
                                                 <circle id="ani_circle"
                                                     class="progress"
                                                     r="115"
@@ -137,11 +151,12 @@
                                             <div class="shadow"></div>
                                         </form>
                                     </li>
-                                    <li>
-                                        <img alt="" id="result_image" onclick="image_click(this)" style="width:auto; height:auto; max-width:300px;min-width: 220px; max-height: 500px;cursor: pointer;"/>
+                                    <li>  <div class="6u$" id = "result_image_div"><span class="image fit">
+                                              <img id="result_image">
+                                        </span></div>
                                     </li>
                                 </ul>
-                                <div class="6u$ 12u$(small)">
+                                <div class="6u$ 12u$(small)" id ="find_check">
                                     <ul class="actions vertical">
                                         <li>
                                             <a
@@ -235,9 +250,9 @@
                             
                             
                             <header>
-                                <h2>결과 입력</h2>
+                                <h2>수기 입력</h2>
                                 <p>
-                                    측정하신 인바디의 결과지를 활용하여 입력해주세요.
+                                    측정하신 인바디의 결과지를 활용하여 직접 입력해주세요.
                                 </p>
                             </header>
 
@@ -311,27 +326,559 @@
                                 </div>
                             </form>
                             <section class="special">
-                            <button class="icon big special fa-upload" id="result_submit" style=""> submit&nbsp;</button>
-                            <button class="icon big special" id="submit_success"style="display:none;cursor: default" > &nbsp;&nbsp;&nbsp;success!</button>
+                            <button class="icon big special fa-upload" id="result_submit" style="padding: 0 10px;" > submit</button>
+                            <button class="icon big special fas fa-undo" onclick="retry_upload()" id="retry1"style="display:none;" >retry</button>
                                 </section>
                             <br>
                         </div>
                     </li>
                     <!-- 탭 컨텐츠 (History) -->
                     <li>
-                        <div class="content__wrapper"></div>
+                        <div class="content__wrapper tab2">
+                              <header class="major special">
+                                <br />
+                                <h2>History</h2>
+                                <p>검사 결과 기록지</p>
+                            </header>
+                            <!-- 하이차트 이용한 차트 표현 부분 -->
+                              <div id="chart_container"></div>
+                                 <br /> <br /> <br />
+                            
+                            <!-- DB에 입력한 데이터 수정, 삭제 할 수 있게 하는 부분 -->
+                              <header>
+                                <h2>결과 수정</h2>
+                            </header>
+                            <!-- 메서드 및 설정은 highcart.js에 있음 -->
+                            <select name="category" id="updateDate" onchange="updateDate(this)" style="background-color: #fffa;">
+                                <option value="1">날짜 선택</option>
+                            </select>
+                            <form  action="#" id="updateData" style="display: none;">
+                                <br>
+                                <div class="row uniform 50%">
+                                    <div class="3u 12u$(xsmall)">
+                                        <p style="margin:-3px">
+                                            체중
+                                        </p><input
+                                            type="number"
+                                            id="__weight"
+                                            style="width: 100%;"
+                                        />
+                                    </div>
+                                    <div class="3u 12u$(xsmall)">
+                                      <p style="margin:-3px">
+                                            골격근량
+                                        </p><input
+                                            type="number"
+                                            id="__muscle"
+                                            style="width: 100%;"
+                                        />
+                                    </div><div class="3u 12u$(xsmall)">
+                                        <p style="margin:-3px">
+                                            체지방률
+                                        </p><input
+                                            type="number"
+                                            id="__fat"
+                                            style="width: 100%;"
+                                        />
+                                    </div>
+                                    <div class="3u$ 12u$(xsmall)">
+                                        <p style="margin:-3px">
+                                            체수분
+                                        </p><input
+                                            type="number"
+                                            id="__water"
+                                            style="width: 100%;"
+                                        />
+                                    </div>
+                                </div>
+                                 <div class="row uniform 50%">
+                                    <div class="3u 12u$(xsmall)">
+                                        <p style="margin:-3px">
+                                            단백질 
+                                        </p><input
+                                            type="number"
+                                            id="__protein"
+                                            style="width: 100%;"
+                                        />
+                                    </div>
+                                    <div class="3u 12u$(xsmall)">
+                                        <p style="margin:-3px">
+                                            무기질 
+                                        </p><input
+                                            type="number"
+                                            id="__mineral"
+                                            style="width: 100%;"
+                                        />
+                                    </div>
+                                    <div class="6u$ 12u$(xsmall)">
+                                        <p style="margin:-3px">
+                                            검사일시
+                                        </p><input
+                                            type="date"
+                                            id="__date"
+                                            style="width: 100%;"
+                                        />
+                                    </div>
+                                </div>
+                                <br>
+                                <section class="special">
+                                    <!-- 폼 내부에 버튼이 있다면 자동으로 action이벤트 발생시켜서 type 지정해야함 -->
+                                    <button type="button" class="icon big special fa-trash" onclick="update_reset();" style="padding: 0 10px;"> 삭제</button>
+                                    <button type="button" class="icon big special fa-upload" onclick="update_highchart();" style="padding: 0 10px;"> 적용</button>
+                                </section>
+                            </form>
+                            
+                           
+                            
+                            
+                            <hr>
+                            <!-- 선택한 항목에 따른(필터링) 해석(개인에 따른거X, 공용적인 부분) -->
+                              <header >
+                                <h2>각 성분에 대한 해석
+                                    <!-- <i class="fas fa-question-circle" onclick="popup(event,'참고 문헌 : ');"></i> -->
+                                  </h2>
+                                  <p>차트에 체크된 부분만 표시됩니다.</p>
+                                  <br/>
+                            </header>
+                            <section id="section_ex_0" style="margin-bottom:4em">
+                            <h2 class="icon fas fa-weight fa-2x">&nbsp;&nbsp;체중</h2>
+							    <blockquote style="font-style:normal">
+                                    체중. 몸을 구성하는 체수분, 단백질, 무기질, 체지방의 총량.<br>
+                                    이중 체수분이 인체의 가장 많은 비율을 차지하기 때문에 단시간 체중 감량에는 몸의 <b>수분</b>을 빼는 것이 가장 빠른 방법이다.<br>
+                                    부가적으로 BMI수치는 체중을 키로 나눈 것이기에 체지방과 근육의 비율이 없는 이러한 지수로 비만이라 보기 어렵다.
+                                    <div class="3u$"><span class="image fit">
+                                        <img id = "img_ex1" src="{% static 'main/images/mypage_section_weight1.jpg' %}" style="cursor: pointer;"/></span></div>
+                                </blockquote>
+                            </section>
+                            <section id="section_ex_1" style="margin-bottom:4em">
+                            <h2 class="icon fas fa-dumbbell fa-2x">&nbsp;&nbsp;골격근량</h2>
+                                <blockquote style="font-style:normal">
+                                    골격근. 뼈에 붙어있는 근육. 성분으로는 체수분+단백질로 이루어져있다.<br>
+                                    근육을 크게 세가지로 나누면 뼈에 붙어있는 근육인 <b>골격근</b>, 심장에 붙어있는 근육인 <b>심근</b>, 소화기 및 내장의 근육인 <b>내장근</b>이 있다.<br>
+                                    인바디의 경우 측정 방식이 다양하지만 대개 근육량의 57%를 골격근량으로 계산한다.<br>
+                                    평균 골격근량은 체중*0.45 정도이다.
+                                </blockquote>
+                            </section>
+                            <section id="section_ex_2" style="margin-bottom:4em">
+                            <h2 class="icon fas fa-hamburger fa-2x">&nbsp;&nbsp;체지방률</h2>
+                                <blockquote style="font-style:normal">
+                                    체지방. 지방 조직 및 기타 조직에서 추출 가능한 지질.<br>
+                                    지방은 세포막을 구성하는 필수 지방, 에너지를 내기위한 저장지방이 있다.<br>
+                                    피하지방 : 피부아래에 쌓인 지방들을 의미한다. 부위별 체지방 분해속도는 거의 동일하지만 부위별 살의 양이 다르기에 체감되는 속도가 다르다.<br>
+                                    내장지방 : 내장에 붙어있는 지방들을 의미한다. 에너지를 축적 및 사용하기 용이한 부분이라 다른 부분보다 먼저 빠질 수 있다.<br>
+                                    <a href="https://www.youtube.com/watch?v=VXjcJc0T6AI" target='_blank'>참고 영상</a><br>
+                                </blockquote>
+                            </section>
+                            <section id="section_ex_3" style="margin-bottom:4em">
+                            <h2 class="icon fas fa-tint fa-2x">&nbsp;&nbsp;체수분</h2>
+							<blockquote style="font-style:normal">
+                                    체수분. 인체의 여러가지 기능을 담당하는 체성분. 우리몸에서 가장많은 체성분으로 약 50~70%를 차지.<br>
+                                    체수분을 높이려면 수분을 많이 포함하는 근육을 키우고, 수분을 적게 포함하는 체지방률을 낮춰야한다.<br>
+
+                                    세포내수분 : 근육 조직등 세포의 구성성분으로 신진대사에 관여한다.<br>
+                                    세포외수분 : 혈장등에서 물질 전달에 관여한다.<br>
+                                    건강한 경우 세포내수분과 세포외수분의 비율은 3:2이다.<br>
+                                </blockquote>
+                            </section>
+                            <section id="section_ex_4" style="margin-bottom:4em">
+                            <h2 class="icon fas fa-drumstick-bite fa-2x">&nbsp;&nbsp;단백질</h2>
+							<blockquote style="font-style:normal">
+                                단백질. 절반가량은 근육에, 그외의 전반적인 신체조직과 혈액 및 체액, 효소에도 함유.<br>
+                                단백질은 탄수화물에 비해 소화시간이 길므로 포만감이 오래 유지되어 다이어트에 도움이 된다.<br>
+                                단백질을 과다 복용하게 될 경우 신장에 부담을 줄 수 있지만 건강하다면 유의미한 수준은 아니라고한다.<br>
+                                <a href="https://www.youtube.com/watch?v=l2bB64IQZyU">참고 영상</a>
+                                </blockquote>
+                            </section>
+                            <section id="section_ex_5" style="margin-bottom:4em">
+                            <h2 class="icon fas fa-bone fa-2x">&nbsp;&nbsp;무기질</h2>
+							<blockquote style="font-style:normal">
+                                무기질. 뼈와 체액에 녹아있는 무기성분의 총량. 무기질의 종류 중 대표적으로 칼슘, 인이 있다.<br>
+                                무기질이 부족하면 골밀도가 낮을 가능성이 있다.<br>
+                                인바디에서 제공하는 무기질량은 근육량과 신체발달 상태로부터 추정한 값으로  크게 낮을 경우 정밀 골밀도 검사를 받아보는 것이 좋다.<br>
+                                </blockquote>
+                            </section>
+                            <br>
+                            <br>
+                        </div>
+                    </li>
+                    <!-- 탭 컨텐츠 (Body profile) -->
+                    <li>
+                        <div class="content__wrapper tab3">
+                             <header class="major special">
+                                <br />
+                                <h2>Body Profile</h2>
+                                <p>눈바디 <i class="fas fa-question-circle" onclick="popup(event,'+ 기호를 클릭하여 사진을 첨부하고,<br>날짜를 설정해 당신의 몸을 기록해보세요.');"></i>
+                                 </p>
+                            </header>
+                                <section id="main" class="wrapper row" style="margin-left: 0px;">
+                                    <select name="category" id="history_select_date" onchange="history_select_date(this);" 
+                                            style="background-color: #fffa;display:none;border-radius: 15px;margin-bottom:10px;">
+                                        <option>날짜 선택</option>
+                                    </select>
+                                    <div class="scroll_container row" id="history_div">
+                                      
+                                        <!-- 추가하는 부분 -->
+                                        <form id="form_addSpec" action="#" class="scroll_element">
+                                            <input type="date" id="bodyprofile_add_date"class="input_date" name="date"placeholder="yyyy-mm-dd"/>
+                                        <input type="file" id="bodyprofile_add_picture" accept="image/*" onchange="func_imagePriview(event,'scroll_element_addImage');
+                                                                                                         setTimeout(function() {resize_tab();}, 200);" style="display:none"/>
+                                          <img id="scroll_element_addImage" onclick="getElementById('bodyprofile_add_picture').click();" src="" class="icon fas fa-plus-square fa-9x" style="left:22%;color:#f32853;cursor: pointer;" >
+                                          <div class="scroll_spec">
+                                              <div class="spec_input">체중<br>
+                                                  <input
+                                                         class="scroll_element_add"
+                                                         type="number"
+                                                         name="weight"
+                                                         placeholder="~~~kg"
+                                                />
+                                              </div>
+                                              <div class="spec_input">골격근량<br>
+                                                  <input
+                                                         class="scroll_element_add"
+                                                         type="number"
+                                                         name="muscle"
+                                                         placeholder="~~~kg"
+                                                /></div>
+                                              <div class="spec_input">체지방률<br>
+                                                  <input
+                                                         class="scroll_element_add"
+                                                         type="number"
+                                                         name="fat"
+                                                         placeholder="~~~%"
+                                                /></div>
+                                              <div class="scroll_sizeStart"></div>
+                                              <div class="spec_input">어깨<br>
+                                                  <input
+                                                         class="scroll_element_add"
+                                                         type="number"
+                                                         name="shoulder"
+                                                         placeholder="~~cm"
+                                                /></div>
+                                              <div class="spec_input">팔<br>
+                                                  <input
+                                                         class="scroll_element_add"
+                                                         type="number"
+                                                         name="arm"
+                                                         placeholder="~~cm"
+                                                /></div>
+                                              <div class="spec_input">가슴<br>
+                                                  <input
+                                                         class="scroll_element_add"
+                                                         type="number"
+                                                         name="chest"
+                                                         placeholder="~~cm"
+                                                /></div>
+                                              <div class="spec_input">허벅지<br>
+                                                  <input
+                                                         class="scroll_element_add"
+                                                         type="number"
+                                                         name="thigh"
+                                                         placeholder="~~cm"
+                                                /></div>
+                                              <div class="spec_input">배<br>
+                                                  <input
+                                                         class="scroll_element_add"
+                                                         type="number"
+                                                         name="belly"
+                                                         placeholder="~~cm"
+                                                /></div>
+                                              <button type='button' class="special" onclick="addSpec();">
+                                                  추가하기<br>
+                                                  </button>
+                                              
+                                          </div>
+                                        </form>
+                                        
+                                        <!-- scroll_element div-->
+                                  </div>
+                                </section>
+                        </div>
                     </li>
                     <!-- 탭 컨텐츠 (Feedback) -->
                     <li>
-                        <div class="content__wrapper"></div>
-                    </li>
-                    <!-- 탭 컨텐츠 (Ranking) -->
-                    <li>
-                        <div class="content__wrapper"></div>
+                        <div class="content__wrapper tab4">
+                            <header class="major special">
+                                <br />
+                                <h2>Feedback</h2>
+                                <p>온라인 PT <i class="fas fa-question-circle" onclick="popup(event, '자료가 부족하여 <br>정보의 질이 낮을 수 있습니다.');" ></i></p>
+                            </header>
+                            <section class="wrapper" style="padding: 0;">
+                                
+                                
+                                <header>
+                                    <h3>스케줄</h3>
+                                </header>
+                                <section class="feed" style="overflow: auto;">
+                                    <table class= "alt" id="feed_calendar" style="cursor: pointer;min-width: 700px;">
+									<thead>
+										<tr>
+											<th onclick="feed_cal_click(this);" id="feed_0" style="min-width: 100px"></th>
+											<th onclick="feed_cal_click(this);" id="feed_1" style="min-width: 100px"></th>
+											<th onclick="feed_cal_click(this);" id="feed_2" style="min-width: 100px"></th>
+											<th onclick="feed_cal_click(this);" id="feed_3" style="min-width: 100px"></th>
+											<th onclick="feed_cal_click(this);" id="feed_4" style="min-width: 100px"></th>
+											<th onclick="feed_cal_click(this);" id="feed_5" style="min-width: 100px"></th>
+											<th onclick="feed_cal_click(this);" id="feed_6" style="min-width: 100px"></th>
+										</tr>
+									</thead>
+									<tbody>
+                                        <tr style="font-size: 0;height: 3px;"><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr>
+										<tr>
+											<th onclick="feed_cal_click(this);" id="feed_7"></th>
+											<th onclick="feed_cal_click(this);" id="feed_8"></th>
+											<th onclick="feed_cal_click(this);" id="feed_9"></th>
+											<th onclick="feed_cal_click(this);" id="feed_10"></th>
+											<th onclick="feed_cal_click(this);" id="feed_11"></th>
+											<th onclick="feed_cal_click(this);" id="feed_12"></th>
+											<th onclick="feed_cal_click(this);" id="feed_13" style="padding-top: 5px;"></th>
+										</tr>
+                                        <tr style="font-size: 0;height: 2px;"><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr>
+                                        <tr>
+											<th onclick="feed_cal_click(this);" id="feed_14"></th>
+											<th onclick="feed_cal_click(this);" id="feed_15"></th>
+											<th onclick="feed_cal_click(this);" id="feed_16"></th>
+											<th onclick="feed_cal_click(this);" id="feed_17"></th>
+											<th onclick="feed_cal_click(this);" id="feed_18"></th>
+											<th onclick="feed_cal_click(this);" id="feed_19"></th>
+											<th onclick="feed_cal_click(this);" id="feed_20" ></th>
+										</tr>
+									</tbody>
+                                    </table>
+                                </section>
+                                
+                                    <hr>
+                                
+                                <header>
+                                    <h3 id="feed_workout_head" style="display:inline;">운동</h3>
+                                    <button class="icon fas fa-redo alt " onclick="feed_workout_reload(this);" style="font-size: x-small;" >  
+                                                reload
+                                            </button>
+                                    <i class="fas fa-question-circle" onclick="popup(event,'추천도에 따른 확률로 운동 종목이 추천되며<br>자세한 운동 방식은 youtube 혹은 지인에게 배우시길 바랍니다.');"></i>                                    <font size="2" id="feed_workout_source"style="float:right;display:none;">운동 자세 출처 : <a href="https://https://weighttraining.guide/" target="_blank">https://weighttraining.guide/</a></font>
+
+                                </header>
+                                <section class="feed" style="width:100%;overflow:auto;">
+                                        <table>
+                                            <tbody>
+                                                <tr id="feed_workout_div" style="background: none;border: none;">
+                                                    <td style="min-width:220px;display:none;">
+                                                        <div style="border-radius:15px;background:#fff8;padding:9px;">
+                                                            <img class ="image fit" onclick="popup_feedImg(event,this)" id="자세명" src="" />
+                                                            <h3 style="line-height: 1.1em;">
+                                                            </h3>
+                                                            <b style="line-height: 1.1em;">
+                                                                error code
+                                                            </b>
+                                                            <b style="line-height: 1.1em;margin-top:0.8em;color:gray;">
+                                                            </b>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                </section>
+                                    <!-- <div style="postion:relative;float:right;bottom:0;margin-top: -3em;">
+                                        tip<i class="fas fa-question-circle" onclick="popup(event,'운동의 종목이 적을 수록 고강도 저반복 형식으로 진행해주세요.');"></i>
+                                    </div> -->
+                                
+                                    <hr >
+                                
+                                <header>
+                                    <h3 id="feed_food_head" style="display: inline;">식단</h3>
+                                    
+                                    <button class="icon fas fa-redo alt " onclick="feed_food_reload(this);" style="font-size: x-small;" >  
+                                                reload
+                                            </button>
+                                    <font size="2" id="feed_food_source"style="float:right;display:none;">음식 영양성분 제공 출처 : <a href="https://www.fatsecret.kr/" target="_blank">https://www.fatsecret.kr/</a></font>
+
+                                </header>
+                                <section class="feed" id="feed_food_content">
+                                    <section class ="feed" style="overflow:auto;width:100%;">
+                                        <table style="border-radius: 20px;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="min-width:160px;"></th>
+                                                    <th style="min-width:160px;"></th>
+                                                    <th style="min-width:160px;"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </section>
+                                    <div id="feed_food_add" style="display:none">
+                                        <h4>추가 섭취</h4>
+                                        <div style="font-weight: bold;">
+                                            
+                                        </div>
+                                        <!-- 추가 섭취(병영식일때만) -->
+                                    </div>
+                                    <div id="feed_food_sum">
+                                        <h4>하루 총 섭취량   <font id="suggest_kcal" style="font-size: 9pt;color: gray;text-transform: none;margin-left: 8pt;">권장 칼로리 : ~kcal</font>
+                                <i class="fas fa-question-circle" onclick="popup_eat(event);" ></i></h4>
+                                        <div style="font-size: small;font-weight: bold;">
+                                            칼로리 : ~~kcal<br>
+                                            탄수화물 : ~~(g), 단백질 : ~~(g), 지방 : ~~(g)
+                                        </div>
+                                        <div>
+                                            <button class="icon fas fa-arrow-up alt " onclick="feed_kcal(this,0)">  
+                                                칼로리 UP
+                                            </button>
+                                            <button class="icon fas fa-arrow-down alt "onclick="feed_kcal(this,1)">
+                                                칼로리 DOWN
+                                            </button>
+                                        </div>
+                                    </div>
+                                </section>
+                                
+                            </section>
+                        </div>
                     </li>
                     <!-- 탭 컨텐츠 (Account) -->
                     <li>
-                        <div class="content__wrapper"></div>
+                        <div class="content__wrapper tab5">
+                            <header class="major special">
+                                <br />
+                                <h2>Setting</h2>
+                                <p>정보 설정</p>
+                            </header>
+                    <section class="wrapper" style="padding: 0;">
+						<div class="row account_element_div">
+							<div class="3u 12u$(medium)">
+									<b style="font-size:13pt">닉네임 변경</b>
+							</div>
+							<div class="9u$ 12u$(medium) value">
+								<input type="text" id="acc_aka" onchange="acc_oncahnge(this)" />
+							</div>
+                            <div class="3u 12u$(medium)">
+									<b style="font-size:13pt">비밀번호 변경</b>
+							</div>
+							<div class="9u$ 12u$(medium) value">
+								<input type="password" id="acc_pw_check" onchange="if(this.value.length == 0){this.style.background='white';}" placeholder="현재 비밀번호를 입력해주세요."/>
+								<input type="password" id="acc_pw_new" onchange="if(this.value.length == 0){this.style.background='white';}" placeholder="변경할 비밀번호를 입력해주세요."/>
+							</div>
+                            
+                            
+                            <div class="3u 12u$(medium)">
+									<b style="font-size:13pt">운동 설정 </b>
+                                <!-- <i class="fas fa-question-circle"></i>   -->
+                                <!-- onclick="popup_workout(event,{% url 'information' %});" -->
+							</div>
+							<div class="9u$ 12u$(medium) value">
+                                <p class="icon fas fa-arrow-down" onclick="acc_openWorkout(this);" style="margin-bottom:0.5em;" id="acc_opener"></p>
+                                <section id='acc_workout' style="display:none">
+                                    <div class="9u$ 12u$(medium) ">
+                                        <select id="acc_target" onchange="acc_oncahnge(this)" >
+                                            <option value="0">목표 설정</option>
+                                            <option value="1">Bulk Up (근육량 증가)</option>
+                                            <option value="2">Cutting (체지방 감소)</option>
+                                            <option value="3">Diet (다량의 체지방 감소)</option>
+                                        </select>
+                                    </div>
+                                    <div class="9u$ 12u$(medium) ">
+                                        <select name="category" onchange="acc_oncahnge(this)" id="acc_num" style="background-color: #fffa;">
+                                            <option value="-1">분할 수</option>
+                                            <option value="0">무 분할</option>
+                                            <option value="2">2 분할</option>
+                                            <option value="3">3 분할</option>
+                                            <option value="4">4 분할</option>
+                                        </select>
+                                    </div>
+                                    <div class="9u$ 12u$(medium) ">
+                                        <select name="category" id="acc_way" onchange="acc_oncahnge(this)" style="background-color: #fffa;">
+                                            <option value="0">운동 방식</option>
+                                            <option value="1">보디빌딩</option>
+                                            <option value="3">파워리프팅</option>
+                                            <option value="4">크로스핏</option>
+                                            <option value="5">맨몸운동</option>
+                                        </select>
+                                    </div>
+                                    <p class="6u$ 12u$(medium) " style="margin-bottom: 0.5em;">
+                                        운동 부위</p>
+                                    <section id="acc_part">
+                                        <input
+                                               type="checkbox"
+                                               id="acc_back"
+                                               name="bodycheck_check"/>
+                                        <label for="acc_back">등</label>
+                                        <input
+                                               type="checkbox"
+                                               id="acc_shoulder"
+                                               name="bodycheck_check"/>
+                                        <label for="acc_shoulder">어깨</label>
+                                        <input
+                                               type="checkbox"
+                                               id="acc_chest"
+                                               name="bodycheck_check"/>
+                                        <label for="acc_chest">가슴</label>
+                                        <input
+                                               type="checkbox"
+                                               id="acc_leg"
+                                               name="bodycheck_check"/>
+                                        <label for="acc_leg">하체</label>
+                                    </section>
+                                    <div class="6u$ 12u$(medium)">
+                                                <small style="font-size:13pt">운동 가능 일수&nbsp;&nbsp;</small>
+                                            <input type="number" id="acc_pDay" min="0" max="7" onchange="acc_oncahnge(this)">
+                                    </div>
+                                    
+                                </section>
+							</div>
+                            
+                            <div class="3u 12u$(medium)">
+									<b style="font-size:13pt">나이 변경</b>
+							</div>
+							<div class="9u$ 12u$(medium) value">
+								<input type="number" id="acc_age" min="0" max="100" onchange="acc_oncahnge(this)">
+							</div>
+                            
+                            <div class="3u 12u$(medium)">
+									<b style="font-size:13pt">신장 변경</b>
+							</div>
+							<div class="9u$ 12u$(medium) value">
+								<input type="number" id="acc_height" min="100" max="220" onchange="acc_oncahnge(this)"/>
+							</div>
+                            
+                            <div class="3u 12u$(medium)">
+									<b style="font-size:13pt">사진 설정</b>
+							</div>
+							<div class="9u$ 12u$(medium) value">
+								<div class="5u"><span class="image fit">
+                                    <input type="file" id="acc_picture_input" accept="image/*" onchange="func_imagePriview(event,'acc_picture');
+                                                                                                         setTimeout(function() {resize_tab();}, 200);" style="display:none"/>
+                                    <img id = "acc_picture" src="" onclick="getElementById('acc_picture_input').click();"/>
+                                    <div class="12u">
+                                        <i class="5u fas fa-check fa-2x" onclick="acc_pictureUpdate();"></i>
+                                        <i class="5u fas fa-redo fa-2x" onclick="getElementById('acc_picture_input').click();"></i>
+                                    </div>
+                                    </span>
+                                </div>
+							</div>
+                            
+                             <div class="3u 12u$(medium)">
+									<b style="font-size:13pt">부대 식단 
+                                        <i class="fas fa-question-circle" onclick="popup(event,'군인인 경우 부대를 등록해보세요.<br>국방부 공공 데이터를 활용하여 부대 식단을 가져옵니다.');"></i></b>
+							</div>
+							<div class="9u$ 12u$(medium) value">
+								<button onClick = "acc_army();" id = "acc_army"> 부대 설정 </button>
+								<button onClick = "acc_army_random(this);" id = "acc_army_random"> 랜덤 설정 </button>
+							</div>
+                            
+                            <div class="3u 12u$(medium)">
+									<b style="font-size:13pt">계정 탈퇴</b>
+							</div>
+							<div class="9u$ 12u$(medium) value">
+								<button style="background: green;" onClick = "acccount_delete();"> 탈퇴하기 </button>
+							</div>
+                            
+                            <div class="12u$ 12u$(medium) value">
+                                <section class="special">
+                                    <button class="special" onclick="account_update();">Submit</button>
+                                </section>
+                            </div>
+						</div>
+                            </section>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -341,22 +888,10 @@
         <footer id="footer">
             <div class="container">
                 <ul class="icons">
-                    <li><a href="#" class="icon fa-facebook"></a></li>
-                    <li><a href="#" class="icon fa-instagram"></a></li>
-                    <li>
-                        <a
-                            href="https://github.com/worldonetop"
-                            target="_blank"
-                            class="icon fa-github"
-                        ></a>
-                    </li>
-                    <li>
-                        <a
-                            href="https://velog.io/@dlwpdlf147"
-                            class="icon fa-vimeo-square"
-                            target="_blank"
-                        ></a>
-                    </li>
+						<li><a href="https://www.facebook.com/profile.php?id=100005084624729" class="icon fas fa-facebook-square"></a></li>
+						<li><a href="https://www.instagram.com/dlwpdlf147/" class="icon fas fa-instagram"></a></li>
+                        <li><a href="https://github.com/worldonetop" target="_blank" class="icon fas fa-github-square"></a></li>
+                        <li><a href="https://velog.io/@dlwpdlf147" class="icon fas fa-vimeo-square" target="_blank"></a></li>
                 </ul>
                 <ul class="copyright">
                     <li>&copy; 이제일</li>
@@ -370,18 +905,25 @@
                 </ul>
             </div>
         </footer>
+        
         <!-- Scripts -->
         <script src="{% static 'main/js/jquery.min.js' %}"></script>
         <script src="{% static 'main/js/skel.min.js' %}"></script>
         <script src="{% static 'main/js/util.js' %}"></script>
         <script src="{% static 'main/js/main.js' %}"></script>
-        <script src="{% static 'main/js/tab.js' %}"></script>
         <!-- ajax에서 scrf 위조 방지 -->
         <script src="{% static 'main/js/ajax_scrf.js' %}"></script>
-        <!-- url 때문에 listener 추가  -->
+        
+<script src='https://code.highcharts.com/highcharts.js'></script>
+<script src='https://code.highcharts.com/modules/exporting.js'></script>
+<script src="{% static 'main/js/highchart.js' %}"></script>
+                <!-- url 때문에 listener 추가  -->
         <script>
             var url = "{% url 'upload_img' %}";
         </script>
         <script src="{% static 'main/js/upload.js' %}"></script>
+        <script src="{% static 'main/js/image-zoom.min.js' %}"></script>
+        <script src="{% static 'main/js/tab.js' %}"></script>
+        <script>image_zoom_init(["result_image", "img_ex1"]);</script>
     </body>
 </html>

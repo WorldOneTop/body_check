@@ -2,6 +2,7 @@ var fileUpload = document.getElementById("image_upload_form");
 var fileUploadInput = document.getElementById("image_upload_input");
 var ajax_image;
 add_listener();
+$("#result_image_div").fadeOut();
 
 function dragover(){
       fileUpload.classList.add("drag");
@@ -31,16 +32,15 @@ function retry_upload(){
     fileUploadInput.style.cursor = "pointer";
     add_listener();
     // success 버튼 감추기
-    $("#submit_success").css("display",'none')
+    $("#retry1").css("display",'none');
     // submit 버튼 출현
-    $("#result_submit").css("display",'')
+    $("#result_submit").css("display",'');
     // 해당 변수가 정의가 안되있는경우(image업로드안했을때)가 있어서 아래에 배치
     ajax_image.abort();
-    $("#result_image").fadeOut(0);
+    $("#result_image_div").fadeOut(0);
     $("#image_upload_form").fadeIn(400);
-    
-    
-    
+    // 항목 체크 출현
+    $("#find_check").fadeIn(400);
 }
 function add_listener(){
     fileUpload.removeEventListener("dragover", stop_dragover);
@@ -105,6 +105,8 @@ function image_upload(url) {
             retry = document.getElementById("retry");
             //처리 도중 retry 방지
             retry.setAttribute("href","");
+            retry1 = document.getElementById("retry1");
+            retry1.setAttribute("href","");
             
             clearTimeout(ani_timeout);
             ani.css("-webkit-animation",'progress-animate-fast 0.3s ease 0.3s');
@@ -116,17 +118,34 @@ function image_upload(url) {
                 alert("값을 찾지 못했습니다.");
             }else{
                 delete result['result_img'];
-
                 setTimeout( function(){
-                    document.getElementById('result_image').setAttribute("src",result_img_path);
+                    // 이미지 로드되면 resize_tab 함수 실행
+                    $('#imageZoom').attr('src', result_img_path).on('load', function() {
+                        resize_tab();
+                    });
+                    $('.containerZoom')[0].style.backgroundImage = "url('"+result_img_path+"')";
                     $("#image_upload_form").fadeOut(0);
-                    $("#result_image").fadeIn(400);
+                    $("#find_check").fadeOut(0);
+                    $("#result_image_div").fadeIn(400);
                     for (var key in result){
-                        document.getElementById("result_"+key).value = result[key]; 
+                        var html_key = "";
+                        if(key=="체중"){
+                            html_key ="weight";
+                        }else if(key=="골격근량"){
+                            html_key ="muscle";
+                        }else if(key=="체지방률"){
+                            html_key = "fat";
+                        }else if(key=="체수분"){
+                            html_key = "water";
+                        }else if(key=="단백질"){
+                            html_key = "protein";
+                        }else if(key=="무기질"){
+                            html_key = "mineral";
+                        }else if(key=="검사일시"){
+                            html_key = "date";
+                        }
+                        document.getElementById(html_key).value = result[key]; 
                     }
-                    setTimeout(() => resize_tab(), 500);
-                    
-                   
 
                 }, 1600);    
             }
@@ -139,13 +158,18 @@ function image_upload(url) {
             }
         },complete : function() {
          //처리 완료시 다시 허용
-         retry.setAttribute("href","javascript:retry_upload()");
+         retry.setAttribute("onclick","retry_upload()");
+         retry1.setAttribute("onclick","retry_upload()");
     }
 
     });
 }
 // 사용자가 나가거나 이동시 해당 사진 삭제
 window.onbeforeunload = function() {
+    del_uploadImage();
+}
+
+function del_uploadImage(){
     $.ajax({
         url: "del_img/",
         data: "",
@@ -165,23 +189,38 @@ $("#result_submit").click( function() {
         }
     }
     
-    if(emptyList){
+    
+    if(!form.elements[form.elements.length-1].value){
+        alert("검사한 날짜를 입력해주세요.");
+    }
+    else if(emptyList){
         alert("값을 입력해주세요.");
+        return;
     }
     else{
         $.ajax({
         url: "upload_change/",
         data: {"dict":JSON.stringify(result)},
         type: 'POST',
+        dataType : "json",
         success: function (result) {
+            // chart 데이터 업데이트
+            create_chartData(result)
+        // 스크롤 맨위로
+        document.documentElement.scrollTop = 0;
+            //history 탭으로 이동
+            sessionStorage.setItem("tab", 2);
+            location.reload();
+            
+            // submit 버튼 감추기
+            $("#result_submit").css("display",'none');
+            // success 버튼 출현
+            $("#retry1").css("display",'');
+            
             // 입력값들 초기화
             for(var i = 0; i < form.elements.length; i++){
                 form.elements[i].value = "";
             }
-            // submit 버튼 감추기
-            $("#result_submit").css("display",'none')
-            // success 버튼 출현
-            $("#submit_success").css("display",'')
         },error:function(request,status,error){
             window.location.href="../error?case=1"
         } 

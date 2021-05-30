@@ -1,0 +1,108 @@
+{"workout":{
+    "T-바 로우":["벤트오버 바벨 로우,케이블 로우","등","바벨","머신 없이 바벨 한쪽을 고정시킨 채 같은 운동을 할 수 있다.",7,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/row4.png?raw=true","136"],
+    "굿모닝":["백 익스텐션","기립근,둔근,대퇴이두","바벨","허리를 확실히 편 상태로 수행해야 한다.",2,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/good1.png?raw=true","1"],
+    "덤벨 벤치 프레스":["벤치 프레스,인클라인 덤벨 프레스,디클라인 덤벨 플스","가슴","덤벨,벤치","바벨 벤치프레스에 비해 자유로운 궤적으로 더 많은 가동범위로 수행할 수 있다.",10,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/press9.png?raw=true","1346"],
+    "덤벨 숄더 프레스":["밀리터리 프레스","전면 삼각근,측면 삼각근","덤벨","11자로 밀어 올려야 다른 부위의 개입이 적음.",10,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/press3.png?raw=true","16"],
+    "덤벨 슈러그":["업라이트 로우,바벨 슈러그","상부 승모근","덤벨","",3,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/shrug1.png?raw=true","1"],
+    "덤벨 컬":["바벨 컬","이두근","덤벨","어깨가 뒤로 빠지지 않아야 하고, 손목의 중립을 지켜야 전완근의 개입이 줄음.",8,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/curl1.png?raw=true","16"],
+    "덤벨 킥백":["트라이셉스 푸쉬다운","삼두근","덤벨","치팅을 할 경우 관절에 부담을 줄 수 있음.",4,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/triceps5.png?raw=true","1"],
+    "덤벨 풀오버":["","가슴","덤벨","어깨가 안좋을 경우 추천하지 않는다.",4,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/pullover1.png?raw=true","1"],
+    "덤벨 플라이":["펙 덱 플라이","흉근외측,흉근내외측","덤벨,벤치","수축 시 이두와 가슴을 붙인다는 느낌으로 진행한다.",6,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/fly1.png?raw=true","1"],
+    "데드리프트":["루마니안 데드리프트,스모 데드리프트, 스쿼트,벤치 프레스","전신","바벨","3대 운동중 하나이다.<br>스트랩은 벗어서 전완근과 가오를 챙기도록 하자.",9,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/deadlift1.png?raw=true","1346"],
+    "디클라인 덤벨 프레스":["덤벨 벤치 프레스,인클라인 덤벨 프레스","흉근하부","덤벨,벤치","",8,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/press11.png?raw=true","16"],
+    "딥스":["벤치 딥스","흉근하부,삼두근","철봉","어깨 부상 용이",9,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/triceps6.png?raw=true","1456"],
+    "라잉 사이드 레터럴 레이즈":["사이드 레터럴 레이즈","측면 삼각근,후면 삼각근","덤벨, 벤치","",5,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/raise5.png?raw=true","16"],
+    "라잉 트라이셉스 익스텐션":["트라이셉스 익스텐션","삼두근","바벨","",6,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/triceps4.png?raw=true","1"],
+    "런지":["원 레그 런지,스쿼트","대퇴부","","",7,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/leg2.png?raw=true","1456"],
+    "레그 레이즈":["행잉 레그 레이즈","하부 복직근,장요근","","",7,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/crunch9.png?raw=true","156"],
+    "레그 익스텐션":["레그 프레스,레그 컬","대퇴사두","머신","",9,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/leg3.png?raw=true","1"],
+    "레그 컬":["레그 프레스,레그 익스텐션","대퇴이두","머신","",8,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/leg4.png?raw=true","1"],
+    "레그 프레스":["스쿼트,레그 컬,런지","대퇴부,둔근","머신","",8,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/leg1.png?raw=true","1"],
+    "렛풀다운":["풀업,비하인드 넥 풀다운","광배근","머신","",10,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/down1.png?raw=true","146"],
+    "루마니안 데드리프트":["데드리프트,벤트오버 바벨 로우","등","바벨","",9,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/deadlift2.png?raw=true","136"],
+    "리버스 리스트 컬":["리스트 컬,리버스 컬","전완근,상완근","바벨","",3,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/curl9.png?raw=true","1"],
+    "리버스 카프 레이즈":["카프 레이즈","종아리 전면","","",3,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/leg6.png?raw=true","15"],
+    "리버스 컬":["바벨 컬,해머 컬","이두근,상완근","바벨","",4,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/curl7.png?raw=true","1"],
+    "리버스 크런치":["크런치","하부 복직근","","",3,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/crunch4.png?raw=true","156"],
+    "리스트 컬":["리버스 리스트 컬,리버스 바벨 컬","전완근","덤벨","",4,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/curl8.png?raw=true","1"],
+    "머신 숄더 프레스":["밀리터리 프레스","전면 삼각근,측면 삼각근","머신","개개인 신체 구조에 맞게 사용",5,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/press6.png?raw=true","1"],
+    "밀리터리 프레스":["덤벨 숄더 프레스","전면 삼각근,측면 삼각근","바벨","",10,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/press4.png?raw=true","1346"],
+    "바벨 슈러그":["덤벨 슈러그,업라이트 로우","상부 승모근","바벨","",2,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/shrug2.png?raw=true","1"],
+    "바벨 컬":["덤벨 컬","이두근","바벨","",7,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/curl2.png?raw=true","16"],
+    "백 익스텐션":["굿모닝,슈퍼맨 백 익스텐션","기립근,둔근","머신","척추중립유지",3,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/extension1.png?raw=true","1"],
+    "버티컬 레그 크런치":["크런치,리버스 크런치","하부 복직근","","",3,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/crunch5.png?raw=true","15"],
+    "벤치 딥스":["딥스","삼두근","벤치","",4,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/triceps7.png?raw=true","15"],
+    "벤치 프레스":["인클라인 벤치 프레스,디클라인 덤벨 프레스,클로즈 그립 벤치 프레스","가슴","바벨,벤치","무게 욕심 부리다 다치기 십상",10,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/press7.png?raw=true","1346"],
+    "벤트 오버 레터럴 레이즈":["프론트 레이즈, 사이드 레터럴 레이즈","후면 삼각근","덤벨","과도한 가동범위로 견갑골이 모아질 경우 승모근의 개입 가능성",10,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/raise4.png?raw=true","16"],
+    "벤트오버 바벨 로우":["원 암 덤벨 로우,루마니안 데드리프트","등","바벨","그립과 너비, 자세에 따라 자극 부위가 상이",9,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/row2.png?raw=true","1346"],
+    "비하인드 넥 풀다운":["렛풀다운,풀업,클로즈 그립 친업","광배근","머신","",6,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/down2.png?raw=true","1456"],
+    "비하인드 넥 프레스":["밀리터리 프레스","전면 삼각근,측면 삼각근","바벨","회전근개 부상 주의",5,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/press2.png?raw=true","1"],
+    "사이드 레터럴 레이즈":["프론트 레이즈,벤트 오버 레터럴 레이즈","측면 삼각근","덤벨","저중량, 어깨 부상 주의",10,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/raise1.png?raw=true","16"],
+    "사이드 밴드":["트위스트 크런치","복사근","덤벨","",5,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/crunch8.png?raw=true","156"],
+    "슈퍼맨 백 익스텐션":["백 익스텐션","둔근,기립근","","",3,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/extension2.png?raw=true","1456"],
+    "스모 데드리프트":["데드리프트,루마니안 데드리프트","전신","바벨","",3,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/deadlift3.png?raw=true","1346"],
+    "스쿼트":["프런트 스쿼트,시시 스쿼트,데드리프트","전신","바벨","",9,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/squat1.png?raw=true","13456"],
+    "불가리안 스플릿 스쿼트":["스쿼트,런지","하체","덤벨","",9,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/squat4.png?raw=true","156"],
+    "시시 스쿼트":["스쿼트,프론트 스쿼트","하체","","",3,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/squat3.png?raw=true","15"],
+    "시티드 레그 턱":["버티컬 레그 크런치","배","벤치","",3,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/crunch6.png?raw=true","156"],
+    "시티드 트위스트":["트위스트 크런치","복사근","","",5,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/crunch7.png?raw=true","156"],
+    "싯업":["크런치","배","","",6,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/crunch1.png?raw=true","156"],
+    "아놀드 프레스":["덤벨 숄더 프레스","전면 삼각근,측면 삼각근","덤벨","너무 무거운 중량으로 진행 시 부상 주의",4,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/arnold_press.png?raw=true","1"],
+    "업라이트 로우":["덤벨 슈러그,바벨 슈러그","측면 삼각근","바벨","손목이 꺾여 부담이 갈 수있다",5,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/row1.png?raw=true","1"],
+    "원 암 덤벨 로우":["벤트오버 바벨 로우","등","덤벨,벤치","",9,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/row3.png?raw=true","146"],
+    "원 암 사이드 케이블 레터럴":["사이드 레터럴 레이즈","측면 삼각근","케이블","자극에 집중",4,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/raise2.png?raw=true","1"],
+    "인클라인 덤벨 컬":["덤벨 컬, 바벨 컬","이두근","벤치,덤벨","",4,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/curl4.png?raw=true","1"],
+    "인클라인 덤벨 프레스":["덤벨 벤치 프레스,디클라인 덤벨 프레스","흉근상부","덤벨,벤치","",9,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/press10.png?raw=true","146"],
+    "인클라인 덤벨 플라이":["덤벨 플라이","흉근내외측,흉근상부","덤벨,벤치","운동의 난이도가 높은편이다",6,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/fly2.png?raw=true","1"],
+    "인클라인 벤치 프레스":["벤치 프레스,디클라인 덤벨 프레스","흉근상부","바벨,벤치","전면 삼각근이 개입하므로 적정한 그립너비를 해야함",8,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/press8.png?raw=true","146"],
+    "인클라인 케이블 플라이":["케이블 크로스오버,케이블 플라이,크로스오버","흉근상부,흉근내외측","케이블","과도하게 어깨를 젖힐경우 부상 초래",4,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/fly4.png?raw=true","1"],
+    "카프 레이즈":["리버스 카프 레이즈","종아리","","",5,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/leg5.png?raw=true","15"],
+    "케이블 로우":["벤트오버 바벨 로우","중하부 승모근,광배근","케이블","",7,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/row5.png?raw=true","1"],
+    "케이블 컬":["바벨 컬","이두근","케이블","",4,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/curl6.png?raw=true","1"],
+    "케이블 크런치":["크런치","배","케이블","",6,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/crunch1.png?raw=true","16"],
+    "케이블 크로스오버":["케이블 플라이,로우 풀리 케이블 크로스 오버","흉근하부,흉근내외측","케이블","과도하게 어깨를 젖힐경우 부상 초래",5,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/crossover1.png?raw=true","1"],
+    "케이블 플라이":["펙 덱 플라이","흉근내외측,가슴","케이블","과도하게 어깨를 젖힐경우 부상 초래",7,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/fly3.png?raw=true","16"],
+    "크런치":["케이블 크런치,싯업,트위스트 크런치","상부 복직근","","",6,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/crunch2.png?raw=true","156"],
+    "클로즈 그립 벤치 프레스":["벤치프레스,트라이셉스 푸쉬다운","삼두근,가슴","바벨","",6,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/triceps3.png?raw=true","13"],
+    "클로즈 그립 친업":["친업,풀업","광배근","철봉","",8,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/up1.png?raw=true","145"],
+    "클린 앤 프레스":["","전면 삼각근,측면 삼각근, 전신","바벨","부상의 위험이 크다",1,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/press5.png?raw=true","1346"],
+    "트라이셉스 익스텐션":["트라이셉스 푸쉬다운,라잉 트라이셉스 익스텐션","삼두근","덤벨","",9,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/triceps2.png?raw=true","1"],
+    "트라이셉스 푸쉬다운":["트라이셉스 익스텐션","삼두근","케이블","",9,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/triceps1.png?raw=true","1"],
+    "트위스트 크런치":["싯업,크런치","상부 복직근,복사근","","",6,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/crunch3.png?raw=true","156"],
+    "트위스트 행잉 레그 레이즈":["행잉 레그 레이즈,레그 레이즈","하부 복직근,복사근","","",9,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/crunch11.png?raw=true","1456"],
+    "펙 덱 플라이":["덤벨 플라이","흉근내외측","머신","",9,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/fly5.png?raw=true","1"],
+    "프론트 레이즈":["사이드 레터럴 레이즈,벤트 오버 레터럴 레이즈","전면 삼각근","덤벨","그립에 따라 자극 부위에 약간의 차이가 있음",9,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/raise3.png?raw=true","16"],
+    "프론트 스쿼트":["스쿼트,시시 스쿼트","전신","바벨","",6,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/squat2.png?raw=true","134"],
+    "프리쳐 컬":["바벨 컬,덤벨 컬","이두근","머신","",4,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/curl3.png?raw=true","1"],
+    "해머 컬":["덤벨 컬,리버스 컬","이두근","덤벨","",8,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/curl5.png?raw=true","1"],
+    "행잉 레그 레이즈":["레그 레이즈,트위스트 행잉 레그 레이즈","하부 복직근,장요근","","",9,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/crunch10.png?raw=true","1456"],
+    "헥스 프레스":["덤벨 프레스,펙 덱 플라이","흉근내외측","덤벨,벤치","",8,"https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/press12.png?raw=true","1"]
+},
+ "food":{
+     "px":{"참치크래커":[390,23, 13, 26.9], "마시는 오트밀 퀘이커":[230, 29, 10, 8],"사조 스노우 크랩킹":[130, 9, 12, 0.8], "감동란":[125, 1.1, 12.7, 7.7],"정통 불고기 참치":[195, 16.5, 18, 6],"살코기 동원참치(100g)":[210, 0, 19, 7],"크림우동":[480,75, 15, 17],"감동란":[125, 1.1, 12.7, 7.7],"프로틴(1스쿱)":[98,2,21,1.9] },
+     "normal":{
+         "계란(1개)":[77,0.56,6.2,5.3,"123",3,""],"닭가슴살(100g)":[109,0,23,1.2,"123",3,""],"참치캔(100g)":[210,0,19,15,"123",3,""],"견과류(28g)":[173,6,4.6,15.7,"123",4,"요거트(100g),저지방 우유(200ml)"],"저지방 우유(200ml)":[80,9,6,2,"123",4,"시리얼(1컵),견과류(28g),닭가슴살(100g)"],"요거트(100g)":[75,5,4.5,3.9,"13",4,"견과류(28g)"],"시리얼(1컵)":[124,27.4,2.4,1.1,"13",3,"저지방 우유(200ml)"],"감자(100g)":[86,20,1.8,0.1,"13",4,""],"고구마(1개)":[186,43,2.2,0.7,"13",4,""],"현미밥":[321,69,6.3,1.5,"23",1,""],"사과":[72,19,0.3,0.2,"123",5,""],"배":[96,25.6,0.6,0.2,"123",5,""],"식빵(1조각)":[66,12.6,1.9,0.8,"123",3,"저지방 우유(200ml)"],"샐러드":[184,10,1.4,15.7,"",3,""],"잡곡밥":[340,73.5,8.8,2,"23",1,""],"밥":[300,65,5.7,1,"23",1,""],"바나나":[105,27,1.3,0.4,"123",5,""],"고등어구이":[379,0.7,35.2,25.2,"23",2,""],"삼치구이":[360,0.4,37.3,22,"23",2,""],"콩밥":[345,74.6,9,2,"23",1,""],"토마토(1개)":[22,4.8,1,0.3,"123",5,""],"두유":[95,4,9,5,"123",4,""],"오이(1개)":[45,11,2,0.3,"123",5,""],"호두(28g)":[200,3,5,19,"13",4,""],"아몬드(1개)":[7,0.24,0.26,0.61,"123",4,""],"김치찌개":[121,6.5,7.5,7.5,"23",2,"밥,현미밥,콩밥,잡곡밥"],"계란말이":[336,6.5,25.5,22.4,"123",2,""],"된장찌개":[171,16.8,15,5.6,"23",2,"밥,현미밥,콩밥,잡곡밥"],"호박죽":[211,44,4.4,3,"123",1,""],"레몬주스(100ml)":[26,9,0.4,0,"123",5,""],"오렌지주스":[112,25.8,1.7,0.5,"123",5,""],"귤(1개)":[35,8.9,0.6,0.1,"123",5,""],"연어샐러드":[192,11.8,12.2,10.8,"123",3,""],"닭가슴살샐러드":[201,2.1,11.1,16.4,"123",3,""],"소고기 미역국":[177,16.1,15,6.8,"23",2,""],"고등어 구이":[379,0.7,35.2,25.2,"23",2,""],"북엇국":[110,3.3,12.8,5,"23",2,"밥,현미밥,콩밥,잡곡밥"]}},
+     
+ "ex":{
+     "workout":{"운동이름":["관련 운동","주동근","사용도구","비고","추천도(1~10)","자세사진url(깃허브이용)","보디빌딩1,/* 피지크2, */ 파워리프팅3, 크로스핏4, 맨몸5, 다이어트6"]},
+     "food":{
+         "px":{
+             "상품명":["kcal","탄","단","지"]},
+         "normal(사회음식)":{
+             "상품명":["kcal","탄","단","지","아침1점심2저녁3","식사류1 반찬류2 / 주식류3 간식류4 과일류5","궁합맞는음식"]}
+     }
+ }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

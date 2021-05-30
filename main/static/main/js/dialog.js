@@ -40,7 +40,7 @@ function checkForm_Login(){
         $('#alert_email').fadeIn(500);
         // 데이터베이스 ajax조회
         $.ajax({
-            url:'login/',
+            url:'/login/',
             data : { 'id': str, 'pw': $('#input_password').val() },
             type:'POST',
             success:function(cased){
@@ -59,7 +59,17 @@ function checkForm_Login(){
                     $('form').addClass('complete');
                     sessionStorage.setItem('id', str);
                     setTimeout(function(){
-                        location.reload();
+                        if($('#modal-container').hasClass('mypage')){
+                            document.location.pathname = "/mypage/";
+                        }
+                        else if($('#modal-container').hasClass('comm_write')){
+                            var isBug = document.getElementById("h_bug").style.color == "rgb(243, 40, 83)";
+                            window.location.href = '../../write/'+ (isBug ? 1 : 0)+ '/0';
+                        }
+                        else{
+                            location.reload();
+                        }
+                            
                         },600);
                 }
                 //등록된id가 아닐때                
@@ -97,17 +107,23 @@ $('#modal-container').click(function(e){
 
 //다이얼로그 띄우기
 // navpanel이 열려 있을시 클릭 안되는 버그 fix
-function dialog_click(id) {
+function dialog_click(id, to) {
   $("form").removeClass('complete'); //로그인 양식 띄워놓기
   $('#navPanel').removeClass('visible'); //판넬이 닫히면서 창이 뜰 수 있도록
-  $('#modal-container').removeAttr('class').addClass(id);
+  $('#modal-container').removeAttr('class').addClass(id+' '+ to);
   $('body').addClass('modal-active');
+  document.getElementById('input_email').focus();
 }
 
 
 
 // email 확인 정규식
-function checkEmail(myValue) {        
+function checkEmail(myValue) { 
+    // test계정의 경우 허용
+    if(myValue == 'test'){
+        return true;
+    }
+    
     var email = myValue;
     var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
         if(exptext.test(email)==false){

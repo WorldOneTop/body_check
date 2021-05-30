@@ -7,10 +7,35 @@
 	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
 */
 
-/* 창 닫는 위치 css*/
-
-
-
+/* popup css */
+#popup{
+    border:1px solid black;
+    border-radius: 8px;
+    background: #F1F3F4;
+    padding: 2px;
+    display: none;
+    position: absolute;
+    width: auto;
+    height: auto;
+    z-index: 99999;
+}
+#popup_close{
+    float: right;
+    margin-top: 3px;
+    margin-right: 3px;
+    cursor:pointer;
+}
+#popup_contents{ 
+    font-size: smaller;
+    font-weight: bold;
+    text-align: center;
+    padding: 12px;
+    line-height: 1.5em;
+}
+.fa-question-circle{
+    cursor:pointer;
+    margin-left:0.5em;
+}
 
 /* Reset */
 
@@ -1651,7 +1676,7 @@
 		}
 
 	a {
-		text-decoration: underline;
+		text-decoration: none;
 		color: #f32853;
 	}
 
@@ -1882,7 +1907,7 @@
 		input[type="button"].big,
 		button.big,
 		.button.big {
-			font-size: 1.35em;
+			font-size: 1.2em;
 		}
 
 		input[type="submit"].disabled, input[type="submit"]:disabled,
@@ -1971,7 +1996,7 @@
 			input[type="button"],
 			button,
 			.button {
-				padding: 0;
+				/* padding: 0.5em; */
 			}
 
 		}
@@ -2991,6 +3016,7 @@
 		width: 20em;
 		padding: 0.5em 1.25em;
 		text-transform: uppercase;
+        Z-index:999;
 	}
 
 		#navPanel ul {
@@ -3270,3 +3296,7 @@
 				}
 
 		}
+
+.row{
+    margin-left:0;
+}

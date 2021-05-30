@@ -128,23 +128,26 @@ def get_result(value, json_dict, width, img_path):
         search_value = value
     
     for f in json_dict['result']:
-        if (f['boxes'][0][0] < width/2):          # 원하는 글자가 최소 왼쪽 반에 속해있다고 가정
+        if (f['boxes'][0][0] < width*2/3):          # 원하는 글자가 최소 왼쪽 2/3지점에 속해있다고 가정
             if (search_value in f['recognition_words'][0]): # 원하는 글자가 json 값에 포함되어있는지
-                data = f
+                if(len(f['recognition_words'][0]) < 8): #7글자를 넘어가는거면 다른거라고 가정
+                    data = f
     try: # 정확한 글자가 안나왔을때
         if(not data):                                # 원하는 값이 정확한 글자가 아닐때
             for f in json_dict['result']:
                 if (f['boxes'][0][0] < width/2):
                     for s in similar[value][1:]:             # 비슷한 문자와 비교
-                        if (s in f['recognition_words'][0]):
-                            data = f
+                        if (s in f['recognition_words'][0]): # 문자열안에 찾는 값이 포함되어있는지
+                            if(len(f['recognition_words'][0]) < 8): #7글자를 넘어가는거면 다른거라고 가정
+                                data = f
     except(KeyError): #찾으려는단어가 다른거일때
         pass
-    
+
     if(not data):
         print('"'+value+'"(이)라는 글자를 찾지못함.')
         return None
 
+    
     y = data['boxes'][1][1]
     x = data['boxes'][1][0]
     data_list = []
@@ -191,14 +194,21 @@ def get_result(value, json_dict, width, img_path):
 
     # 결과 전송 하기 전 인식한 글자에 따른 rgb 색상
     if (value == '체중'):
-        rgb = [255, 0, 0]
+        rgb = [124, 181, 236]
     elif (value == '골격근량'):
-        rgb = [0, 255, 0]
+        rgb = [67, 67, 72]
     elif (value == '체지방률'):
-        rgb = [0, 0, 255]
+        rgb = [144, 237, 125]
+    elif (value == '체수분'):
+        rgb = [247, 163, 92]
+    elif (value == '단백질'):
+        rgb = [128, 133, 233]
+    elif (value == '무기질'):
+        rgb = [241, 92, 128]
+    elif (value == '검사일시'):
+        rgb = [0, 0, 0]
     else:
         rgb = [255, 255, 255]
-
     return [result_box, rgb,  result]
 
 # 왼쪽에 막대기 있는지 판별 있으면 true 반환

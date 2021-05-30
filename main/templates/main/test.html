@@ -1,33 +1,233 @@
-{% load static %}
 <!DOCTYPE html>
-<html lang="en">
-    <head>
+{% load static %}
+<html lang="en" >
+<head>
+    
         <meta charset="UTF-8" />
-        <title>CodePen - Upload Animation</title>
+        <title>CodePen - Adaptive tabs</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+            href="https://fonts.googleapis.com/css?family=Open+Sans:400,300"
+            rel="stylesheet"
+            type="text/css"
+        />
         <link rel="stylesheet" href="{% static 'main/css/main.css' %}" />
-        <link rel="stylesheet" href="{% static 'main/css/upload.css' %}" />
-    </head>
-    <body>
+            <link rel="stylesheet"  href="{% static 'main/css/image-zoom.css' %}"/>
         
-        <a href="javascript:add_listener()">retry</a>
-        <form class="upload" method="post" enctype="multipart/form-data" id="image_upload_form">{% csrf_token %}
-            <input type="file" class="drop-here" accept="image/*" id="image_upload_input"/>
-            <div class="text text-drop">drop here</div>
-            <div class="text text-upload">uploading</div>
-             <!-- 원그려주는 공간 확보 -->
-            <svg class="progress-wrapper" width="300" height="300">
-                <circle class="progress" r="115" cx="150" cy="150"></circle>
-            </svg>
-                <!-- 끝난 후 V표시 그려주는 거 -->
-            <svg class="check-wrapper" width="130" height="130">
-                <polyline class="check" points="100.2,40.2 51.5,88.8 29.8,67.5 " />
-            </svg>
-                <!-- 뒤의 무지갯빛 그림자 -->
-            <div class="shadow"></div>
-        </form>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+<script src="https://kit.fontawesome.com/f54e2de30e.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{% static 'main/css/scroll.css' %}">
+</head>
+<body>
 
-        <!-- partial -->
-		<script src="{% static 'main/js/jquery.min.js' %}"></script>
-        <script src="{% static 'main/js/upload.js' %}"></script>
-    </body>
+    
+    
+    
+    
+    
+    <div id = "popup">
+        <i id="popup_close" class="fas fa-times-circle" onclick="document.getElementById('popup').style.display='none';"></i>
+        <div id = "popup_contents">
+        </div>
+    </div>
+    
+    
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <i class="far fa-question-circle" onclick="popup_1(event);"></i>
+    
+    
+    
+    
+    
+    
+    
+    
+        <!-- Scripts -->
+        <script src="{% static 'main/js/jquery.min.js' %}"></script>
+        <script src="{% static 'main/js/skel.min.js' %}"></script>
+        <script src="{% static 'main/js/util.js' %}"></script>
+        <script src="{% static 'main/js/main.js' %}"></script>
+        <!-- ajax에서 scrf 위조 방지 -->
+        <script src="{% static 'main/js/ajax_scrf.js' %}"></script>
+        
+        <!-- 함수 먼저 정의해야 DB의 입력값 넣기 가능 -->
+<script src='https://code.highcharts.com/highcharts.js'></script>
+<script src='https://code.highcharts.com/modules/exporting.js'></script>
+<script src="{% static 'main/js/highchart.js' %}"></script>
+                <!-- url 때문에 listener 추가  -->
+</body>
 </html>

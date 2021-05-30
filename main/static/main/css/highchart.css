@@ -1,0 +1,20 @@
+.highcharts-credits{
+    display:none;
+}
+.highcharts-button-symbol{
+    display:none;
+}
+.highcharts-contextmenu{
+    display:none;
+}
+.highcharts-button-box{
+    display:none;
+}
+ /* 모바일화면에서 좌우 글씨 여백부분 */
+/* .highcharts-scrollable-mask{
+    fill: rgba( 255, 255, 255, 0.8 ); */
+}
+/* 차트 배경색 지정*/
+/* .highcharts-background{
+    fill:#fdf9ec ;
+} */

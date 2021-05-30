@@ -6,7 +6,8 @@
   --check-color: var(--text-upload);
   --border-radius: 30px;
   width: 300px;
-  height: 300px;
+  height:300px;
+  min-width:260px;
   opacity:0.9;
   position: relative;
   display: flex;
