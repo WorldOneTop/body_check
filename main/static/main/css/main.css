@@ -2762,7 +2762,7 @@
 
 		.wrapper.style3 {
 			background-attachment: fixed;
-			background-image: url("../images/overlay.png"), url("../images/banner.jpg");
+			background-image: url("../images/overlay.png"), url("https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/banner.jpg?raw=true");
 			background-position: center center;
 			background-size: cover;
             
@@ -3119,8 +3119,8 @@
 	#banner {
 		padding: 16em 0 13em 0;
 		background-attachment: fixed;
-		background-image: url("../images/overlay.png"), url("../images/banner.jpg");
-		background-position: center 30%;
+		background-image: url("../images/overlay.png"), url("https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/banner.jpg?raw=true");
+		background-position: center 5%;
 		background-size: contain;
         background-repeat: repeat, no-repeat;
 		line-height: 1.75;
@@ -3169,7 +3169,7 @@
 		@media screen and (max-width: 736px) {
 
 			#banner {
-				padding: 6em 2em 6em 2em;
+				padding: 6em 2em 4em 2em;
 			}
 
 				#banner br {
@@ -3189,7 +3189,7 @@
 		@media screen and (max-width: 480px) {
 
 			#banner {
-				padding: 4em 2em 4em 2em;
+				padding: 7em 2em 2em 2em;
 			}
 
 		}
@@ -3282,7 +3282,7 @@
 
 		}
 
-		@media screen and (max-width: 480px) {
+		@media screen and (max-width: 638px) {
 
 			#footer {
 				padding: 3em 0 1em 0;

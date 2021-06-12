@@ -111,7 +111,7 @@
                             <input type="password" id="input_password" placeholder="input your password"/>
                         </div>
                             <p style="font-size: 9pt;color: #FFF8;font-family: 굴림;margin:0;">회원이 아닐경우 회원가입이 진행됩니다.</p>
-                        <input type = 'submit' class="button login_button" style="margin-top:1em;padding:0 1.5em" value='login'/>
+                        <input type = 'submit' class="button login_button" style="margin-top:1em;padding:0 1.5em;background: #dcdcdc;color: black !important;" value='login'/>
                         <p style="margin-top:1em;color:white;" id="alert_email"></p>
                     </center>
                 </form> 
@@ -141,22 +141,23 @@
                     
 				</div>
                   <!-- 검색 창 -->
-                    <div class=" container row" style="padding-left: 0px;margin:0 auto;">
-                        <div class="3u" style="padding-left: 0px;">
-                            <select>
-                                <option value=0>작성자</option>
-                                <option value=1>제목+내용</option>
-                            </select>
-                        </div>
-                        <div class="9u row">
-                            <input 
-                                   type="text"
-                                   id="board_search"
-                                   onKeypress="if(event.keyCode==13) {this.parentNode.children[1].click();}"
-                                   />
-                            <i class="fas fa-search fa-2x" onclick="info_search(this);" style="position: absolute;padding: 6px;margin-left: -45px;"></i>
-                        </div>
-                        </div>
+                        <form action="./" method="GET"  class=" container row" style="padding-left: 0px;margin:0 auto;">
+                            <div class="3u" style="padding-left: 0px;">
+                                <select id="board_category" name="category">
+                                    <option value=1>작성자</option>
+                                    <option value=2>제목+내용</option>
+                                </select>
+                            </div>
+                            <div class="9u row" >
+                                <input 
+                                       type="text"
+                                       id="board_search"
+                                       name="search"
+                                       style="padding-right:2.8em;"
+                                       />
+                                <i class="fas fa-search fa-2x" type='submit' onclick="$('form').submit();" style="position: absolute;padding: 6px;margin-left: -45px;"></i>
+                            </div>
+                        </form>
                         <br/><br/>
                 <div class="container" >
                     <button class ="alt icon fas fa-edit"style="float:right" onclick="comm_edit('{{ request.session.id }}');"> 글 작성 </button>
@@ -175,15 +176,14 @@
 									</tbody>
 								</table>
                      <!-- 페이지 넘기는 번호들 -->
-                    <p style="text-align: center;" class="board_pageDiv">
-                        <a><i class="fas fa-angle-double-left" style="margin-right:4px;"> </i></a>
-                        <a><i class="fas fa-angle-left" style="margin-right:7px;"></i></a>
-                        <a> 1 </a>
-                        <a> 2 </a>
-                        <a> 3 </a>
-                        <a><i class="fas fa-angle-right" style="margin-left:7px;"></i></a>
-                        <a><i class="fas fa-angle-double-right" style="margin-left:4px;"> </i></a>
-                    </p>
+                    <div style="text-align: center;" class="board_pageDiv">
+                        <a onclick="paging(-4);"><i class="fas fa-angle-double-left" style="margin-right:4px;" > </i></a>
+                        <a onclick="paging(-3);"><i class="fas fa-angle-left" style="margin-right:7px;"></i></a>
+                        <div style="display:inline;" id="pageDiv">
+                        </div>
+                        <a onclick="paging(-2);"><i class="fas fa-angle-right" style="margin-left:7px;"></i></a>
+                        <a onclick="paging(-1);"><i class="fas fa-angle-double-right" style="margin-left:4px;"> </i></a>
+                    </div>
                 </div>
                 
         </section>
@@ -207,8 +207,8 @@
 					</ul>
 					<ul class="copyright">
 						<li>&copy; 이제일</li>
-						<li>Design: <a href="https://templated.co/spatial" target="_blank">TEMPLATED</a></li>
-						<li>Create: <a href="https://velog.io/@dlwpdlf147" target="_blank">WorldOneTop</a></li>
+						<li><i class="far fa-envelope"></i> Email : dlwpdlf147@naver.com</li>
+						<li>Create : <a href="https://velog.io/@dlwpdlf147" target="_blank">WorldOneTop</a></li>
 					</ul>
 				</div>
 			</footer>
@@ -228,7 +228,7 @@
         <!-- 전용 js -->
           <script src="{% static 'main/js/community.js' %}"></script>
         
-        <script>init_comm({{ list|safe }});</script>
+        <script>init_comm({{ list|safe }}, {{sum}});</script>
 
 	</body>
 </html>

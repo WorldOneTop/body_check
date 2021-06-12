@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.core.mail import EmailMessage
 from .models import User, OCR, Change, Picture, Board
+from django.db.models import Q
 import random
 import string
 import json
@@ -35,38 +36,41 @@ def index(request):
     return render(request, 'main/index.html')
 
 
-def generic(request):
-    return render(request, 'main/generic.html')
-
-
-def elements(request):
-    return render(request, 'main/elements.html')
-
-
-def test(request):
-    return render(request, 'main/test.html')
-
-
 def intro(request):
     return render(request, 'main/intro.html')
 
 
 def community(request, num, isBug):
+    search = request.GET.get('search')
+    category = request.GET.get('category')
     result = {}
     if(request.session.get('id', False)):
         aka = User.objects.get(pk=request.session['id']).aka
         result['aka'] = aka
     
-    result['list'] = list(Board.objects.select_related().filter(isBug=isBug).values('id','title','date','isRevise','isSecret','email','email__aka').order_by("-id")[num:num+10])
+    if(not(search and category) or search == ''):
+        instance = Board.objects.select_related().filter(isBug=isBug).values('id','title','date','isRevise','isSecret','email','email__aka').order_by("-id")
+        result['sum'] = len(instance)
+        result['list'] = list(instance[num:num+10])
+    else:
+        if(category == '1'):
+            filtering = Board.objects.filter(isBug=isBug,email__aka__contains = search)
+        else:
+            filtering = Board.objects.filter(isBug=isBug).filter(Q(title__contains=search) | Q(content__contains=search))
+        instance = filtering.values('id','title','date','isRevise','isSecret','email','email__aka').order_by("-id")
+        result['sum'] = len(instance)
+        result['list'] = list(instance[num:num+10])
+        
     for i in range(len(result['list'])):
         result['list'][i]['date'] = str(result['list'][i]['date'])
         result['list'][i]['isRevise'] = 1 if result['list'][i]['isRevise'] else 0
         result['list'][i]['isSecret'] =  1 if result['list'][i]['isSecret'] else 0
+        
     return render(request, 'main/community.html', result)
-
+        
 
 def comm_write(request, isBug, num):
-    result = {'data':{}}
+    result = {'data': {}}
 
     if(num != 0 ):
         instance = Board.objects.get(pk=num)
@@ -100,8 +104,9 @@ def comm_visited(request, num):
 
     if(result['data']['email'] == request.session.get('id', "")):
         result['data']['isMe'] = 1
-    elif(result['data']['isSecret']):
+    if(result['data']['isSecret']):
         if(request.session.get('id', False ) == 'dlwpdlf147@naver.com' or result['data']['isMe']):
+            result['data']['isSecret'] = 0
             return render(request, 'main/comm_visited.html', result)
         return render(request, 'main/comm_visited.html', {'data':{'isSecret':1}})
         
@@ -118,7 +123,8 @@ def information(request):
 def comm_save(request, isBug, num):
     result = {'title': request.POST['title'], 'content':request.POST['content']}
     result['email'] = User.objects.get(pk=request.session['id'])
-
+    result['isBug'] = isBug
+    
     if(isBug == 1 and 'isSecret' in request.POST):
         result['isSecret'] = request.POST['isSecret'] == 'true'
 
@@ -128,11 +134,11 @@ def comm_save(request, isBug, num):
         result['picture_isDel'] = request.POST['image']
     # 수정일때
     if(num != 0):
-        Board.objects.get(pk=num).custom_update(result)
+        instance = Board.objects.get(pk=num).custom_update(result)
     else:
-        Board.objects.create(**result)
+        instance = Board.objects.create(**result)
 
-    return HttpResponse("")
+    return HttpResponse(instance.id)
 
 def comm_remove(request, num):
     instance = Board.objects.get(pk=num)
@@ -142,6 +148,8 @@ def comm_remove(request, num):
         instance.delete()
     return HttpResponse("")
     
+
+
 def mypage(request):
     try:
         # 차트에 쓰일 DB 전송

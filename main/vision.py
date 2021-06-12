@@ -144,7 +144,7 @@ def get_result(value, json_dict, width, img_path):
         pass
 
     if(not data):
-        print('"'+value+'"(이)라는 글자를 찾지못함.')
+        # print('"'+value+'"(이)라는 글자를 찾지못함.')
         return None
 
     
@@ -162,7 +162,7 @@ def get_result(value, json_dict, width, img_path):
                     data_list.append([float(i), j])
     
     if(not data_list):
-        print('"'+value+'"의 추정되는 측정 값을 찾지못함.')
+        # print('"'+value+'"의 추정되는 측정 값을 찾지못함.')
         return None
     
     # 만약 추정 값이 2개이상이라면

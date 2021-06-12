@@ -440,14 +440,12 @@ function acc_oncahnge(obj){
 }
 // 운동설정 열기
 function acc_openWorkout(obj){
-    if(document.getElementById('acc_workout').style.display == 'none'){
-        document.getElementById('acc_workout').style.display = 'block';
+    $('#acc_workout').slideToggle();
+    console.log(document.getElementById('acc_workout').style.display)
+    if(obj.className != 'icon fas fa-arrow-up')
         obj.className = 'icon fas fa-arrow-up'
-    }
-    else{
-        document.getElementById('acc_workout').style.display = 'none';
+    else
         obj.className = 'icon fas fa-arrow-down'
-    }
     resize_tab();
 }
 // 사진설정, 바로적용
@@ -1359,8 +1357,8 @@ function feed_food_menu_cal(time, dictKeys, tan, dan, zi){
     
     // 이어서 메뉴 및 시간대에 따라 영양성분을 벗어나지 않는 선에서 추가
     while(cache[0] < tan*0.9 || cache[1] < dan*0.9 || cache[2] < zi*0.9){ // 어느정도 채울떄까지
-        // 25% 확률로 과일 선택
-        if(Math.random() <= 1/4){
+        // 10% 확률로 과일 선택
+        if(Math.random() <= 1/10){
             randomIndex = parseInt( Math.random() * dictKeys.length );
             while(ARMY_WORKOUT_JSON['food']['normal'][dictKeys[randomIndex]][5] != 5){
                 randomIndex = parseInt( Math.random() * dictKeys.length );
@@ -1499,9 +1497,9 @@ function popup_eat(event){
 }
 function popup_inbody(event){
     if(window.outerWidth < 500){ // 모바일에선 사진 그냥 띄우기
-        window.open("/static/main/images/ex_inbody1.jpg");
+        window.open("https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/ex_inbody1.jpg?raw=true");
     }else{
-        popup(event,'<h2 style="color: red;"> 사용 방법 </h2><img style="width: 90%;margin: 20px;" src="/static/main/images/ex_inbody1.jpg">');
+        popup(event,'<h2 style="color: red;"> 사용 방법 </h2><img style="width: 90%;margin: 20px;" src="https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/ex_inbody1.jpg?raw=true">');
     }
 }
 function popup_feedImg(event, obj){

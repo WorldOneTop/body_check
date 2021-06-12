@@ -5,14 +5,14 @@
 	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
 -->
 {% load static %}
-<html>
+<html style="scroll-behavior: smooth;">
 	<head>
 		<title>체 단 실</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-            <link rel="stylesheet" href="{% static 'main/css/main.css' %}" />
         <!-- dialog -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+            <link rel="stylesheet" href="{% static 'main/css/main.css' %}" />
 <link rel="stylesheet" href="{% static 'main/css/dialog.css' %}">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
         <!-- Login -->
@@ -22,8 +22,9 @@
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
 <script src="https://kit.fontawesome.com/f54e2de30e.js" crossorigin="anonymous"></script>
 
+<link rel="stylesheet" href="{% static 'main/css/index.css' %}" />
 	</head>
-	<body>
+	<body style='font-family: "Raleway", Arial, Helvetica, sans-serif;margin-top:-6em;'>
 
 		<!-- Header -->
 			<header id="header" class="alt">
@@ -40,17 +41,15 @@
 						<li><a href="{% url 'index' %}" style="color:#f00d;">Home</a></li>
 						<li>
                             {% if request.session.id %}
-                                <a href="{% url 'mypage' %}">
+                                <a id="mypageBtn" href="{% url 'mypage' %}">
                             {% else %}
-                                <a href="#" onclick="dialog_click('six', 'mypage')">
+                                <a id="mypageBtn" href="#" onclick="dialog_click('six', 'mypage')">
                             {% endif%}
                             my Page</a>
                         
                         </li>
 						<li><a href="{% url 'information' %}">Information</a></li>
 						<li><a href="{% url 'community' num=0 isBug=0 %}">Community</a></li>
-						<li><a href="{% url 'generic' %}">Generic</a></li>
-						<li><a href="{% url 'elements' %}">Elements</a></li>
 						<li>
                             {% if request.session.id %}
                                 <a href="{% url 'logout' to='index' %}">
@@ -88,15 +87,15 @@
 			</svg>
         
             <div class="modal_div">
-                <form method="post" class="login_form" onsubmit="return checkForm_Login()" autocomplete="off">{% csrf_token %}
+                <form method="post" class="login_form" onsubmit="return checkForm_Login()" autocomplete="off"  style="margin:0;">{% csrf_token %}
                     <center>
-                        <p class="login_logo">Login</p>
+                        <p class="login_logo" style="margin:0;padding-bottom: 0.3em;">Login</p>
                         <div class="10u$ (small) login_input">
                             <input type="text" id="input_email" placeholder="input your email"/>
                             <input type="password" id="input_password" placeholder="input your password"/>
                         </div>
                             <p style="font-size: 9pt;color: #FFF8;font-family: 굴림;">회원이 아닐경우 회원가입이 진행됩니다.</p>
-                        <input type = 'submit' class="button login_button" style="margin-top:1em;padding:0 1.5em" value='login'/>
+                        <input type = 'submit' class="button login_button" style="margin-top:1em;padding:0 1.5em;background: #dcdcdc;color: black !important;" value='login'/>
                         <p style="margin-top:1em;color:white;" id="alert_email"></p>
                     </center>
                 </form> 
@@ -114,10 +113,12 @@
 				<ul class="actions">
 					<li>
                         {% if request.session.id %}
-                        <a href="#" class="button special">start</a>
+                        <a href="{% url 'mypage' %}" class="button special" id="startBtn">start</a>
                         
                         {% else %}
-                        <a href="#" class="button special" onclick="dialog_click('six', '')">start</a>
+                        <a href="#" class="button special" id="startBtn" onclick="dialog_click('six', 'mypage');
+                                                                    document.getElementById('input_email').value = 'test'
+                                                                    document.getElementById('input_password').value = 'test'">start</a>
                         
                         {% endif%}
                     </li>
@@ -126,75 +127,257 @@
 				</ul>
 			</section>
         </div>
+        
+                <!-- 이미지 확대 div -->
+        <div id = "picture" style="position:absolute;top:0;left:0;z-index:1005;width:100%;height:100%;background:#000c;display:none;text-align: center;" onclick="this.style.display='none';">
+            <img style="max-height:100%;max-width:100%;object-fit:contain;position: relative;" onclick="event.stopPropagation();"/>
+            <i class="far fa-times-circle fa-3x" style="color:#ddd;margin:20px;position:absolute;top:0;right:0;" aria-hidden="true"></i>
+        </div>
+        <!-- 스크롤 맨위로 가는 버튼 -->
+        <div style="position: fixed;border: 3px solid #aaad;border-radius: 10px;padding: 10px 5px 0px 5px;right: 2%;bottom: 50px; display: none; color: #aaa;text-align: center;z-index: 999;background:white"
+             id = "move_top_div">
+            <i class="fas fa-arrow-up" aria-hidden="true" style="line-height: 0.8em;"><br><br> TOP</i>
+        </div>
 
-        <!-- One -->
-				<section id="one" class="wrapper style1">
-					<div class="container 75%">
-						<div class="row 200%">
-							<div class="6u 12u$(medium)">
-								<header class="major">
-									<h2>Maecenas luctus lectus</h2>
-									<p>Perspiciatis doloremque recusandae dolor</p>
-								</header>
+        <!-- Header -->
+						<header class="major special" style="text-align:center;margin-top:5em;">
+							<h2>For those who workout alone</h2>
+							<p>in army gym</p>
+						</header>
+			
+			<!-- 기능 설명 -->
+				<section class="wrapper ">
+					<div class="container">
+						<header class="major special">
+							<h2>what page is it?</h2>
+							<p>Workout complex service</p>
+						</header>
+						<div class="feature-grid hiddenSection" id="main_1">
+							<div class="feature">
+								<div class="image rounded"><img style="max-height: 185px;" src="https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/index_1.png?raw=true" onclick="picture_click(this);" /></div>
+								<div class="content">
+									<header>
+										<p style="font-weight: bold;font-size: 1.1em;">save for body data</p>
+									</header>
+									<p>인바디 측정 결과의 자세한 데이터와 <br>체형의 변화를 사이즈와 함께 기록할 수 있습니다.</p>
+								</div>
 							</div>
-							<div class="6u$ 12u$(medium)">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non ea mollitia corporis id, distinctio sunt veritatis officiis dolore reprehenderit deleniti voluptatibus harum magna, doloremque alias quisquam minus, eaque. Feugiat quod, nesciunt! Iste quos ipsam, iusto sit esse.</p>
-								<p>Dolorum aspernatur maxime libero ratione quidem distinctio, placeat fugiat laborum voluptatum enim neque soluta vel sunt id ex veritatis. Labore rerum, odit sapiente, alias mollitia magnam exercitationem modi amet earum quia atque ipsum voluptas asperiores quas laboriosam.</p>
+							<div class="feature">
+								<div class="image rounded"><img style="max-height: 185px;" src="https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/index_3.png?raw=true" onclick="picture_click(this);" /></div>
+								<div class="content">
+									<header>
+										<p style="font-weight: bold;font-size: 1.1em;">PT service</p>
+									</header>
+									<p>정보 설정 시 내부 알고리즘을 거쳐 맞춤형 운동과 식단을 추천해줍니다.<br>랜덤 방식 추천으로 다양한 운동 및 식단을 진행 할 수 있습니다.
+                                        <br>또한 군인인 경우 해당 부대의 식단을 가져올 수 있습니다.</p>
+								</div>
+							</div>
+							<div class="feature">
+								<div class="image rounded"><img style="max-height: 185px;" src="https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/index_2.png?raw=true" onclick="picture_click(this);" /></div>
+								<div class="content">
+                                    <header>
+										<p style="font-weight: bold;font-size: 1.1em;">workout information</p>
+									</header>
+									<p>운동에 대한 정보와<br>커뮤니티를 통한 유저들과 정보 교류</p>
+								</div>
+							</div>
+							<div class="feature">
+								<div class="image rounded"><img style="max-height: 185px;" src="https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/index_4.jpg?raw=true" onclick="picture_click(this);" /></div>
+								<div class="content">
+									<header>
+										<p style="font-weight: bold;font-size: 1.1em;">my portfolio</p>
+									</header>
+									<p>군대에서 만들어 볼 수 있었던 첫 프로젝트</p>
+								</div>
 							</div>
 						</div>
 					</div>
 				</section>
-
-			
-			<!-- Three -->
-				<section id="three" class="wrapper style1">
+        
+        
+        
+        <!-- 가이드 -->
+				<section class="wrapper ">
+					<div class="container ">
+						<header class="major">
+							<h2>how to use?</h2>
+							<p>guide</p>
+						</header>
+					</div>
+                    <section id="main_2" class="wrapper hiddenSection">
+                        <div class="guide">
+                            <div class="card" onclick="guideClick(this);" style="background-image:url('https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/guide1.png?raw=true')" >
+                                <div class="background"></div>
+                                <section >
+                                    <h2>테스트 계정 사용</h2>
+                                    <p>테스트 계정으로 로그인해서 My page의 다양한 기능들을 살펴보세요. <br>
+                                        ID:test, PW:test <a href='#'style="margin-left:1.5em;" onclick="document.getElementById('startBtn').click();">바로가기</a></p>
+                                </section>
+                            </div>
+                            <div class="card" onclick="guideClick(this);" style="background-image:url('https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/guide2.png?raw=true')">
+                                <div class="background"></div>
+                                <section>
+                                    <h2>운동 명칭 검색</h2>
+                                    <p>정확한 자세를 모를때 검색하고 싶어도 명칭을 모르겠다면 <a href="{% url 'information' %}">information</a>페이지를 이용해보세요</p>
+                                </section>
+                            </div>
+                            <div class="card" onclick="guideClick(this);" style="background-image:url('https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/guide3.png?raw=true')">
+                                <div class="background"></div>
+                                <section>
+                                    <h2>운동 및 식단 추천</h2>
+                                    <p><a href="#" onclick="document.getElementById('mypageBtn').click()">mypage</a>의 feedback 탭에서 일주일치 운동 및 식단을 개개인에게 맞춰 추천해드립니다.<br>
+                                        <br>군인의 경우 setting탭에서 부대를 등록하여 병사식단을 볼 수도 있습니다.</p>
+                                </section>
+                            </div>
+                            <div class="card" onclick="guideClick(this);" style="background-image:url('https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/guide4.png?raw=true')">
+                                <div class="background"></div>
+                                <section>
+                                    <h2>인바디 &amp; 신체변화 기록</h2>
+                                    <p><a href="#" onclick="document.getElementById('mypageBtn').click()">mypage</a>에서 인바디를 사진으로 업로드하시면 문자인식AI로 주요 정보들을 자동입력하고 이를 저장할 수 있습니다.
+                                        <br>
+                                    그 당시 몸매와 구체적 사이즈, 인바디 정보들을 저장할 수있는 저장공간으로 활용 가능합니다.
+                                    </p>
+                                </section>
+                            </div>
+                            <div class="card" onclick="guideClick(this);" style="background-image:url('https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/guide5.png?raw=true')">
+                                <div class="background"></div>
+                                <section>
+                                    <h2>커뮤니티</h2>
+                                    <p>헬스인들을 위한 커뮤니티와 버그 신고 및 건의사항을 보고할 수 있으며 운영자의 업데이트 내역도 확인할 수 있습니다.</p>
+                                </section>
+                            </div>
+                        </div>    
+                    </section>
+				</section>
+        
+			<!-- 제작환경 -->
+				<section class="wrapper" style="padding-bottom:3em;">
 					<div class="container">
 						<header class="major special">
-							<h2>Ranker of the Month</h2>
-							<p>Feugiat sed lorem ipsum magna</p>
+							<h2>how was made it</h2>
+							<p>born in the military</p>
 						</header>
-						<div class="feature-grid">
-							<div class="feature">
-								<div class="image rounded"><img src="../../static/main/images/pic04.jpg" alt="" /></div>
-								<div class="content">
-									<header>
-										<h4>Lorem ipsum</h4>
-										<p>Lorem ipsum dolor sit</p>
-									</header>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore esse tenetur accusantium porro omnis, unde mollitia totam sit nesciunt consectetur.</p>
-								</div>
-							</div>
-							<div class="feature">
-								<div class="image rounded"><img src="../../static/main/images/pic05.jpg" alt="" /></div>
-								<div class="content">
-									<header>
-										<h4>Recusandae nemo</h4>
-										<p>Ratione maiores a, commodi</p>
-									</header>
-									<p>Animi mollitia optio culpa expedita. Dolorem alias minima culpa repellat. Dolores, fuga maiores ut obcaecati blanditiis, at aperiam doloremque.</p>
-								</div>
-							</div>
-							<div class="feature">
-								<div class="image rounded"><img src="../../static/main/images/pic06.jpg" alt="" /></div>
-								<div class="content">
-									<header>
-										<h4>Laudantium fugit</h4>
-										<p>Possimus ex reprehenderit eaque</p>
-									</header>
-									<p>Maiores iusto inventore fugit architecto est iste expedita commodi sed, quasi feugiat nam neque mollitia vitae omnis, ea natus facere.</p>
-								</div>
-							</div>
-							<div class="feature">
-								<div class="image rounded"><img src="../../static/main/images/pic07.jpg" alt="" /></div>
-								<div class="content">
-									<header>
-										<h4>Porro aliquam</h4>
-										<p>Quaerat, excepturi eveniet laboriosam</p>
-									</header>
-									<p>Vitae earum unde, autem labore voluptas ex, iste dolorum inventore natus consequatur iure similique obcaecati aut corporis hic in! Porro sed.</p>
-								</div>
-							</div>
-						</div>
+                        <div class="row 50% uniform" style="margin-left:0px;">
+                            <div class="1u"></div>
+                            <div class="5u de" onclick="de_click(this,1);" id="de"><h3>제작 환경<br><i class="fas fa-angle-double-down"></i></h3></div>
+							<div class="5u$ de" onclick="de_click(this,0);" id="cpy"><h3>참고자료<br><i class="fas fa-angle-double-down"></i></h3></div>
+                            
+                            <!-- 제작 환경 -->
+                            <div class="row 50% uniform deContent" id="deContent" style="margin-top: 0px;margin-left: 0px;padding: 1em 2em 2em 1em;">
+								<div class="6u">
+                                    <p><b>사지방</b><br><span class="image left" style="min-width: 130px;"><img src="https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/de1.jpg?raw=true"onclick="picture_click(this);"/></span>
+                                        제작자는 군인 신분입니다.
+                                    </p>
+                                </div>
+								<div class="6u$">
+                                    <p><b>IDE</b><br><span class="image left" style="min-width: 130px;"><img src="https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/de2.png?raw=true"onclick="picture_click(this);"/></span>
+                                        클라우드 통합 개발환경 서비스로 사지방에서도 공부할 수 있게 해준 너무 고마운 서비스입니다.<i class="far fa-laugh"></i><br>
+                                        <a target="_blank" href="https://ide.goorm.io/"> 구릅 ide link</a>
+                                        <br><br>
+                                        클라우드 컴퓨팅 사양
+                                        <img style="min-width: 60px;max-width:100px;" src="https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/de8.png?raw=true"onclick="picture_click(this);"/>
+                                    </p>
+                                </div>
+								<div class="6u">
+                                    <p><b>진행 현황</b><br><span class="image left" style="min-width: 130px;"><img src="https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/de7.png?raw=true"onclick="picture_click(this);"/></span>
+                                        해당 프로젝트와 관련해서 구현한 것들을 정리한 글 <br>
+                                        <a target="_blank" href="https://velog.io/@dlwpdlf147/series/%EC%B2%B4%EB%8B%A8%EC%8B%A4">link</a>
+                                    </p>
+                                </div>
+								<div class="6u$">
+                                    <p><b>저장소</b><br><span class="image left" style="min-width: 130px;"><img src="https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/de4.png?raw=true"onclick="picture_click(this);"/></span>
+                                        백업 및 정적 이미지 저장소로 사용되었습니다.<br>
+                                        <a target="_blank" href="https://github.com/WorldOneTop/images_for_bodyCheck">이미지 모음 link</a>
+                                    </p>
+                                </div>
+								<div class="4u">
+                                    <b style="text-align:center;display: block;">Framework</b>
+                                    <img class="image fit" src="https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/de3.png?raw=true"
+                                         onclick="window.open('https://www.djangoproject.com/');"/>
+                                    
+                                </div>
+								<div class="4u">
+                                    <b style="text-align:center;display: block;">hosting</b>
+                                    <img class="image fit" src="https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/de5.png?raw=true"
+                                         onclick="window.open('https://www.pythonanywhere.com/');"/>
+                                    
+                                </div>
+								<div class="4u">
+                                    <b style="text-align:center;display: block;">Database</b>
+                                    <img class="image fit" src="https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/de6.png?raw=true"
+                                         onclick="window.open('https://www.mysql.com/');"/>
+                                </div>
+                                
+                            </div>
+                            
+                            <!-- cpy content -->
+                            <div class="row 50% uniform deContent" id="cpyContent" style="margin-top: 0px;margin-left: 0px;padding: 1em 2em 2em 1em;">
+								<div class="6u">
+                                    <p><b>template</b><br><span class="image right" style="min-width: 130px;"><img src="https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/cpy1.jpg?raw=true"onclick="picture_click(this);"/></span>
+                                        체단실 페이지의 전체적인 디자인<br>
+                                        (개발 도중 해당 사이트가 이전되어서 본래 주소를 찾지못하였습니다. <a target="_blank" href="https://themewagon.com/">link</a>)
+                                        <br><a target="_blank" href="{% static 'main/license/template_license.txt' %}">License</a>
+                                    </p>
+                                </div>
+								<div class="6u$">
+                                    <p><b>codepen</b><br><span class="image right" style="min-width: 130px;"><img src="https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/cpy2.jpg?raw=true"onclick="picture_click(this);"/></span>
+                                        
+                                        로그인 UI : <a target="_blank" href="https://codepen.io/hugo/pen/hwCxG">link</a>
+                                        <a target="_blank" href="{% static 'main/license/login_license.txt' %}">License</a><br>
+                                        
+                                        로그인 dialog : <a target="_blank" href="https://codepen.io/designcouch/pen/obvKxm">link</a>
+                                        <a target="_blank" href="{% static 'main/license/dialog_license.txt' %}">License</a><br>
+                                        
+                                        guide 디자인 : <a target="_blank" href="https://codepen.io/zipbug/pen/qEGGRJ">link</a>
+                                        <a target="_blank" href="{% static 'main/license/cardAni_license.txt' %}">License</a><br>
+                                        
+                                        mypage 디자인 : <a target="_blank" href="https://codepen.io/Lewitje/pen/doJRBX">link</a>
+                                        <a target="_blank" href="{% static 'main/license/tab_license.txt' %}">License</a><br>
+                                        
+                                        mypage upload : <a target="_blank" href="https://codepen.io/milanraring/pen/RwwVdXp">link</a>
+                                        <a target="_blank" href="{% static 'main/license/upload_license.txt' %}">License</a><br>
+                                    </p>
+                                </div>
+								<div class="6u">
+                                    <p><b>OCR API</b><br><span class="image right" style="min-width: 130px;"><img src="https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/cpy3.jpg?raw=true"onclick="picture_click(this);"/></span>
+                                        인바디 사진에서 측정된 값을 인식하는데 사용 <br>(mypage - body check 탭)<br>
+                                        <a target="_blank" href="https://velog.io/@dlwpdlf147/%EC%B2%B4%EB%8B%A8%EC%8B%A4-OCR">구현 설명 link</a><br>
+                                        <a target="_blank" href="https://vision-api.kakao.com/#ocr">kakao vision api link</a>
+                                    </p>
+                                </div>
+								<div class="6u$">
+                                    <p><b>운동 자세</b><br><span class="image right" style="min-width: 130px;"><img src="https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/cpy4.png?raw=true"onclick="picture_click(this);"/></span>
+                                        information 페이지내 운동자세 이미지 <a target="_blank" href="https://weighttraining.guide/category/exercises/">link</a>
+                                    </p>
+                                </div>
+                                
+                                
+                                <div class="4u">
+                                    <b style="text-align:center;display: block;float: none;">아이콘</b>
+                                    <img class="image fit" src="https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/cpy6.png?raw=true"
+                                         onclick="window.open('https://fontawesome.com');"/>
+                                </div>
+                                
+                                <div class="4u">
+                                    <b style="text-align:center;display: block;float: none;word-break: keep-all;">intro 영상</b>
+                                    <img class="image fit" src="https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/cpy5.png?raw=true"
+                                         onclick="window.open('https://www.renderforest.com/templates');"/>
+                                </div>
+                                
+                                <div class="4u$">
+                                    <b style="text-align:center;display: block;float: none;word-break: keep-all;">메인 이미지</b>
+                                    <img class="image fit" src="https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/banner.jpg?raw=true"
+                                         onclick="window.open('https://pixabay.com/ko/illustrations/%EC%8B%A4%EB%A3%A8%EC%97%A3-%EC%8A%A4%ED%8F%AC%EC%B8%A0-%EB%B0%94-%ED%94%BC%ED%8A%B8%EB%8B%88%EC%8A%A4-1975689/');"/>
+                                </div>
+                                <div class="4u">
+                                    <b style="text-align:center;display: block;float: none;word-break: keep-all;">색상 참고</b>
+                                    <img class="image fit" src="https://github.com/WorldOneTop/images_for_bodyCheck/blob/main/images/main/cpy7.jpg?raw=true"
+                                         onclick="window.open('https://encycolorpedia.kr');"/>
+                                </div>
+                                
+                                
+                            </div>
+                        </div>
 					</div>
 				</section>
 
@@ -202,8 +385,8 @@
 				<section id="four" class="wrapper style3 special">
 					<div class="container">
 						<header class="major">
-							<h2>Aenean elementum ligula</h2>
-							<p>Feugiat sed lorem ipsum magna</p>
+							<h2>thank you for visiting this page</h2>
+							<p>많은 이용 바랍니다.</p>
 						</header>
 						<ul class="actions">
 							<li><a href="#" class="button special big">Get in touch</a></li>
@@ -222,8 +405,8 @@
 					</ul>
 					<ul class="copyright">
 						<li>&copy; 이제일</li>
-						<li>Design: <a href="https://templated.co/spatial" target="_blank">TEMPLATED</a></li>
-						<li>Create: <a href="https://velog.io/@dlwpdlf147" target="_blank">WorldOneTop</a></li>
+						<li><i class="far fa-envelope"></i> Email : dlwpdlf147@naver.com</li>
+						<li>Create : <a href="https://velog.io/@dlwpdlf147" target="_blank">WorldOneTop</a></li>
 					</ul>
 				</div>
 			</footer>
@@ -239,6 +422,7 @@
         
         <!-- ajax에서 scrf 위조 방지 -->
           <script src="{% static 'main/js/ajax_scrf.js' %}"></script>
-
+        
+          <script src="{% static 'main/js/index.js' %}"></script>
 	</body>
 </html>

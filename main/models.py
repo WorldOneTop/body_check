@@ -160,6 +160,7 @@ class Board(models.Model):
         if('isSecret' in obj):
             self.isSecret = obj['isSecret']
         self.save()
+        return self
 
 
 def lately_weight(email):

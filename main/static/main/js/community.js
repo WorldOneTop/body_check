@@ -1,4 +1,4 @@
-function init_comm(list){
+function init_comm(list, sum){
     // 글 띄우기
     var contentDiv = document.getElementById('list');
     contentDiv.innerHTML = "";
@@ -26,6 +26,16 @@ function init_comm(list){
         contentDiv.insertAdjacentHTML('beforeend',append);
         contentDiv.children[i].placeholder = list[i]['id'];
     }
+    // 페이지 번호처리
+    
+    var pageDiv = document.getElementById('pageDiv')
+    for(var i =1 ; i <= Math.ceil(sum / 10); i++){
+        pageDiv.innerHTML = '<a href="../'+(i-1)*10+'" > '+i+' </a>';
+    }
+    var present  = window.location.href.split('/');
+    present = present[present.length-2] / 10
+    document.getElementById('pageDiv').children[present].style.color="red"; // 페이지 번호 처리
+                        
 
     // 색상 변경 및 display 바꾸기
     var isBug = window.location.href.split('/');
@@ -58,7 +68,28 @@ function comm_edit(isLogin){
 function listClick(obj){
     window.location.href = '../../visited/' + obj.placeholder;
 }
-
+// 페이지 클릭
+function paging(num){
+    var pageDiv = document.getElementById('pageDiv')
+    if(num == -4){
+        pageDiv.children[0].click();
+    }else if(num == -3){
+        for(var i=1; i<pageDiv.children.length; i++)
+            if(pageDiv.children[i].style.color == "red"){
+                pageDiv.children[i-1].click();
+                return;
+            }
+    }else if(num == -2){
+        for(var i=0; i<pageDiv.children.length-1; i++)
+            if(pageDiv.children[i].style.color == "red"){
+                pageDiv.children[i+1].click();
+                return;
+            }
+        
+    }else if(num == -1){
+        pageDiv.children[pageDiv.children.length-1].click();
+    }
+}
 // write page init
 function init_comm_write(data){
     var isRevise = window.location.href.split('/');
@@ -149,7 +180,7 @@ function comm_write_save(obj){
         contentType : false,
         success: function (result) {
             alert('완료되었습니다.');
-            window.location.href = "../../../visited/"+location.href.split("/")[location.href.split("/").length-2];
+            window.location.href = "../../../visited/"+result;
         },error:function(request,status,error){
             // console.log(request,status,error)
         },complete : function() {
@@ -167,7 +198,7 @@ function init_comm_visited(data){
     var div = document.getElementById('content');
     div.children[0].children[0].innerText = data['title'];
     if(data['isRevise']){
-        div.children[0].children[0].innerHTML += '<font style="border:solid;border-radius:12px;padding:2px;font-size:medium;color:gray;margin-left: 1em;">수정됨</font>';
+        div.children[0].children[0].innerHTML += '<font style="border:solid;border-radius:12px;padding:3px;font-size:0.4em;color:gray;margin-left: 1em;">수정됨</font>';
     }
     div.children[0].children[1].innerText = data['date'].substr(0,10);
     div.children[1].innerText = data['content'];

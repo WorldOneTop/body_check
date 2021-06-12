@@ -74,8 +74,15 @@ function checkForm_Login(){
                 }
                 //등록된id가 아닐때                
                 else{
-                    document.getElementById("hidden_input_email").value = str;
-                    document.getElementById("hidden_signup_form").submit();
+                    if (window.confirm("존재하지 않는 ID 입니다.\n회원가입을 진행하시겠습니까?")) {
+                        document.getElementById("hidden_input_email").value = str;
+                        document.getElementById("hidden_signup_form").submit();
+                    }else{
+                        $('#input_email').focus();
+                        $('body').css("pointer-events","auto");
+                        $('.modal').removeClass("shadow_all")
+                        $('#alert_email').fadeOut(300);
+                    }
                 }
             }
         }); 

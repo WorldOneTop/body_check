@@ -79,7 +79,6 @@ function popup(event, html){
     div.css("display", "block");
 }
 
-
 (function($) {
 
 	skel.breakpoints({
