@@ -38,10 +38,10 @@ $(document).ready(function() {
             var elementY = $(this).offset().top;
             var windowY = $(window).scrollTop() + $(window).height()*2/3;
             if( $(this).css('opacity')=='0' && windowY > elementY ){
-                if($(this).attr('id') == 'main_1'){
+                if($(this).hasClass('main_1')){
                     $(this).animate({'opacity':'0.65','margin-top':'0px'},1200);
                     $(this).animate({'opacity':'1'},350);
-                }else if($(this).attr('id') == 'main_2'){
+                }else if($(this).hasClass('main_2')){
                     $(this).animate({'opacity':'1','width':'100%'},1000);
                 }
             }

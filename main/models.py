@@ -125,6 +125,12 @@ class Picture(models.Model):
         related_name='+',
     )
 
+    def delete(self,*args,**kwargs):
+        if os.path.isfile(self.picture.path):
+            os.remove(self.picture.path)
+
+        super(Picture, self).delete(*args, **kwargs)
+
 
 # 자유게시판 및 버그 건의 게시판
 # 아이디,  제목,내용,작성일시,사진,자유게시판인지 건의게시판인지, 수정이 됐는지, 비밀글인지

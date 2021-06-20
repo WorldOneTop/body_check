@@ -1,5 +1,5 @@
 import json
-import cv2
+# import cv2
 import requests
 import os
 from PIL import ImageFont, ImageDraw, Image
@@ -20,10 +20,12 @@ def ocr_resize(image_path: str):
     
     size = os.path.getsize(image_path)
     while size > LIMIT_SIZE: # 파일 크기가 1mb가 넘을경우
-        image = cv2.imread(image_path)
-        cv2.imwrite(image_path, cv2.resize(image, None, fx=0.95, fy=0.95, interpolation = cv2.INTER_AREA))
-        size = os.path.getsize(image_path)
-    
+        # image = cv2.imread(image_path)
+        # cv2.imwrite(image_path, cv2.resize(image, None, fx=0.95, fy=0.95, interpolation = cv2.INTER_AREA))
+        # size = os.path.getsize(image_path)
+        image = Image.open(image_path)
+        image.resize((int(image.width*0.95), int(image.height*0.95))).save(image_path)
+
 # kakao vision을 통해서 이미지 결과값을 json 형태로 받아옴
 def ocr(image_path: str):
     with open(BASE_DIR+"/secrets.json") as f:
@@ -35,9 +37,11 @@ def ocr(image_path: str):
 
     ocr_resize(image_path)
 
-    image = cv2.imread(image_path)
-    jpeg_image = cv2.imencode(".jpg", image)[1]
-    data = jpeg_image.tobytes()
+    # image = Image.open(image_path)
+    # jpeg_image = cv2.imencode(".jpg", image)[1]
+    # data = jpeg_image.tobytes()
+    with open(image_path, "rb") as image:
+        data = bytearray(image.read())
 
     return requests.post(API_URL, headers=headers, files={"image": data})
 
@@ -46,30 +50,6 @@ def ocr(image_path: str):
 # boxes와 words는 각각 리스트형태로 들어가있음
 # 구조 : {"result" : [ {"bodxes":"[좌표값]", "recognition_words":"[글자]" }, {...} ] }
 # wores는 byte형태로 나오지만 print시 정상작동, 필요시 decode(), output은 응답코드 그대로 나옴
-
-
-# 인식한 박스 및 텍스트를 그려주고 저장하는 함수
-def saveImage(path, name, json_dict):
-    # 인식한 box 그리기
-    img = cv2.imread(path+name)
-
-    for j in json_dict['result']:
-        pts = np.array([j['boxes'][0], j['boxes'][1], j['boxes'][2], j['boxes'][3]], dtype=np.int32)
-        cv2.polylines(img, [pts], True, (0, 255, 0))
-
-    cv2.imwrite(path+"result/save_"+name, img)
-
-    # 인식한 글자 넣기
-    img = Image.open(path+"result/save_"+name)
-    draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype(BASE_DIR + "/main/static/main/fonts/korean_font.ttf", 15) 
-    
-    for j in json_dict['result']:
-        text = j['recognition_words'][0].encode().decode()
-        draw.text(tuple(j['boxes'][3]), text, font=font, fill=(255, 0, 0))
-
-    img.save(path+"result/save_"+name)
-    return path+"result/save_"+name
 
 
 # ocr의 결과인 json을 파일로 저장하는 함수
@@ -89,19 +69,28 @@ def saveImageResult(path, name, box_and_rgb):
         print("error : not box_and_rgb()")
         return None
     
-    img = cv2.imread(path+name)
+    # img = cv2.imread(path+name)
+    # for i in range(len(box_and_rgb)):    # 총 몇개의 세트를 써야하는지
+    #     for box in box_and_rgb[i][0]:     # 한 세트에는 [박스값 두개],컬러값 있음
+    #         pts = np.array([box['boxes'][0], box['boxes'][1],
+    #                         box['boxes'][2], box['boxes'][3]],
+    #                        dtype=np.int32)
+    #         cv2.polylines(img, [pts], True, box_and_rgb[i][1])
+
+    # cv2.imwrite(path+"result/"+name, img)
+
+    img = Image.open(path+name)
+    rectImg = ImageDraw.Draw(img)
     for i in range(len(box_and_rgb)):    # 총 몇개의 세트를 써야하는지
         for box in box_and_rgb[i][0]:     # 한 세트에는 [박스값 두개],컬러값 있음
-            pts = np.array([box['boxes'][0], box['boxes'][1],
-                            box['boxes'][2], box['boxes'][3]],
-                           dtype=np.int32)
-            cv2.polylines(img, [pts], True, box_and_rgb[i][1])
-
-    cv2.imwrite(path+"result/"+name, img)
-
-    # 글자의 rgb값은 반대라서 바꿔줌
-    for rgb in box_and_rgb:
-        rgb[1].reverse() 
+            # 찾은 위치를 가장 크게 표현할 수 있도록
+            x1 = min(box['boxes'][0][0], box['boxes'][3][0])
+            y1 = min(box['boxes'][0][1], box['boxes'][1][1])
+            x2 = max(box['boxes'][2][0], box['boxes'][1][0])
+            y2 = max(box['boxes'][2][1], box['boxes'][3][1])
+            rectImg.rectangle(((x1, y1), (x2,y2)), outline=box_and_rgb[i][1], width=2)
+    
+    img.save(path+"result/"+name)
     
     # 인식한 글자 넣기
     img = Image.open(path+"result/"+name)
@@ -111,7 +100,7 @@ def saveImageResult(path, name, box_and_rgb):
     for i in range(len(box_and_rgb)):
         for value in box_and_rgb[i][0]:
             text = value['recognition_words'][0].encode().decode()
-            draw.text(tuple(value['boxes'][3]), text, font=font, fill=tuple(box_and_rgb[i][1]))
+            draw.text(value['boxes'][3], text, font=font, fill=box_and_rgb[i][1])
 
     img.save(path+"result/"+name)
     return path+"result/"+name
@@ -194,19 +183,19 @@ def get_result(value, json_dict, width, img_path):
 
     # 결과 전송 하기 전 인식한 글자에 따른 rgb 색상
     if (value == '체중'):
-        rgb = [124, 181, 236]
+        rgb = (124, 181, 236)
     elif (value == '골격근량'):
-        rgb = [67, 67, 72]
+        rgb = (67, 67, 72)
     elif (value == '체지방률'):
-        rgb = [144, 237, 125]
+        rgb = (144, 237, 125)
     elif (value == '체수분'):
-        rgb = [247, 163, 92]
+        rgb = (247, 163, 92)
     elif (value == '단백질'):
-        rgb = [128, 133, 233]
+        rgb = (128, 133, 233)
     elif (value == '무기질'):
-        rgb = [241, 92, 128]
+        rgb = (241, 92, 128)
     elif (value == '검사일시'):
-        rgb = [0, 0, 0]
+        rgb = (0, 0, 0)
     else:
         rgb = [255, 255, 255]
     return [result_box, rgb,  result]
@@ -216,18 +205,25 @@ def isResult(path, x_y1, x_y2):
     # x_y1은 왼쪽위 점[x,y], x_y2는 왼쪾 아래 점[x,y]
     x = x_y1[0]
     y = int((x_y1[1]+x_y2[1])/2)
-    img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
-
+    
+    # img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
+    img = Image.open(path)
+    
     # 해당 좌표부터 왼쪽 긴막대가 검은색이라면 측정값의 바 라고 추정
-    img = img[y-2:y+2, x-50:x]
-    img = cv2.threshold(img, 165, 255, cv2.THRESH_BINARY)[1]
+    # img = img[y-2:y+2, x-50:x]
+    # img = cv2.threshold(img, 165, 255, cv2.THRESH_BINARY)[1]
+    
+    img = img.crop((x-50, y-2, x, y+2)).convert("L")
     # # 평균색상이 검은색상에 가깝다면 true 반환
-    return cv2.mean(img)[0] < 127
+    # return cv2.mean(img)[0] < 127
+    return np.average(img) < 165
 
 # 결과(키,추정값)와 이미지 저장
 # return : "{"원한값":"측정값"}"
 def getImageResult(json_dict, path, name, text=['체중', '골격근량', '체지방률']):
-    width = cv2.imread(path+name).shape[1]
+    # width = cv2.imread(path+name).shape[1]
+    width = Image.open(path+name).size[0]
+    
     if(type(text) == list):
         send = []
         result = {}
